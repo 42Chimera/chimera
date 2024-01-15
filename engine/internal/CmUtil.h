@@ -2,7 +2,7 @@
 #define ENGINE_INTERNAL_CMUTIL_H
 
 // cmake generated header for CHIMERA_API macro
-#include "chimera_api_export.h"
+#include "cm_util/chimera_api_export.h"
 
 // chimera util headers
 #include "cm_util/PlatformDetection.h"

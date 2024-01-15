@@ -266,7 +266,11 @@ generate_export_header(${CMAKE_PROJECT_NAME}
         NO_EXPORT_MACRO_NAME    HIDE_FROM_API
         DEPRECATED_MACRO_NAME   DEPRECATED
 )
-
+# configure time에 생성된 헤더를 cm_util로 복사
+file(COPY ${CMAKE_BINARY_DIR}/chimera_api_export.h
+     DESTINATION ${CMAKE_SOURCE_DIR}/internal/cm_util)
+              
+# Set output path
 set_target_properties(${CMAKE_PROJECT_NAME}
   PROPERTIES 
     # remove default library output file's prefix ( default prefix = "lib" )
