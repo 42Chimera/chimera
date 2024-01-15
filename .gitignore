@@ -7,8 +7,17 @@ cmake-build-debug
 engine/build/intermediate/* 
 scop/build/intermediate/*
 binary
-# external library
+
+# External library
 engine/external/spdlog
+engine/external/glfw
+engine/external/glad
+engine/external/imgui
+engine/external/glm
+
+# Generated export header
+engine/internal/cm_util/chimera_api_export.h
+
 # Prerequisites
 *.d
 

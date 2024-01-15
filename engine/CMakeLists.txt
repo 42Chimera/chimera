@@ -65,6 +65,54 @@ add_compile_definitions(
 
 # ----------------------------------------------------------------------------
 # Setting LIBS/SOURCE/INC
+# cmake config time에  소스  코드 다운로드
+include(FetchContent)
+
+FetchContent_Declare(
+  dep_imgui
+  GIT_REPOSITORY https://github.com/ocornut/imgui.git
+  GIT_TAG master
+)
+
+FetchContent_GetProperties(dep_imgui)
+if(NOT dep_imgui_POPULATED)
+  FetchContent_Populate(dep_imgui)
+  set(IMGUI_INCLUDE_DIR ${dep_imgui_SOURCE_DIR})
+  cm_printf("imgui path : ${IMGUI_INCLUDE_DIR}")
+  set(IMGUI_SOURCES
+    ${dep_imgui_SOURCE_DIR}/imgui.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_demo.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_draw.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_tables.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_widgets.cpp
+  )
+  # platform 분기 필요 (window, MacOs, Linux)
+  # 당장은 window mac 모두 glfw opengl3 조합임으로 동일한 소스로 정적 라이브러리 만듬
+  if (APPLE OR WIN32)
+    list(APPEND IMGUI_SOURCES
+      ${dep_imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+      ${dep_imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+    )
+  endif ()
+
+  #external 폴더로 헤더 복사
+  file(GLOB IMGUI_HEADERS1 "${dep_imgui_SOURCE_DIR}/*.h")
+  file(GLOB IMGUI_HEADERS2 "${dep_imgui_SOURCE_DIR}/backends/*.h")
+  set(IMGUI_HEADERS ${IMGUI_HEADERS1} ${IMGUI_HEADERS2})
+  file(COPY ${IMGUI_HEADERS} DESTINATION ${CMAKE_SOURCE_DIR}/external/imgui/include/imgui)
+
+endif()
+
+
+add_library(imgui STATIC ${IMGUI_SOURCES})
+add_dependencies(imgui dep_glfw)
+target_include_directories(imgui PRIVATE ${IMGUI_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/external/glfw/include)
+set_target_properties(imgui
+  PROPERTIES 
+    # Set CMAKE output directory : 최종 실행파일을 밖으로 빼기 위한 용도
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/external/imgui/lib
+)
+  
 
 if(APPLE)
 	INCLUDE_DIRECTORIES(/System/Library/Frameworks)
@@ -81,11 +129,12 @@ endif(APPLE)
 
 # use ExternalProject to download & build external library (ex) spdlog, glfw....)
 include(ExternalProject)
-
+# spdlog
 ExternalProject_Add(
   dep_spdlog
   GIT_REPOSITORY "https://github.com/gabime/spdlog.git"
   GIT_TAG "v1.x"
+  GIT_SHALLOW 1
   INSTALL_DIR ${CMAKE_SOURCE_DIR}/external/spdlog
   CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
@@ -97,19 +146,81 @@ ExternalProject_Add(
 ExternalProject_Get_property(dep_spdlog SOURCE_DIR)
 cm_printf("Spdlog path : ${SOURCE_DIR}")
 
+#glfw
+ExternalProject_Add(
+  dep_glfw
+  GIT_REPOSITORY "https://github.com/glfw/glfw.git"
+  GIT_TAG "3.3.8"
+  GIT_SHALLOW 1
+  INSTALL_DIR ${CMAKE_SOURCE_DIR}/external/glfw
+  CMAKE_ARGS
+      -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+  LOG_CONFIGURE ON
+  LOG_INSTALL ON
+  LOG_BUILD ON
+  LOG_OUTPUT_ON_FAILURE ON
+)
+ExternalProject_Get_property(dep_glfw SOURCE_DIR)
+cm_printf("glfw path : ${SOURCE_DIR}")
+
+#glad
+ExternalProject_Add(
+  dep_glad
+  GIT_REPOSITORY "https://github.com/Dav1dde/glad"
+  GIT_TAG "v0.1.36"
+  GIT_SHALLOW 1
+  INSTALL_DIR ${CMAKE_SOURCE_DIR}/external/glad
+  UPDATE_COMMAND ""
+  PATCH_COMMAND ""
+  TEST_COMMAND ""
+  CMAKE_ARGS
+      -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+      -DGLAD_INSTALL=ON
+  LOG_CONFIGURE ON
+  LOG_INSTALL ON
+  LOG_BUILD ON
+  LOG_OUTPUT_ON_FAILURE ON
+)
+ExternalProject_Get_property(dep_glad SOURCE_DIR)
+cm_printf("glad path : ${SOURCE_DIR}")
+
+# glm
+ExternalProject_Add(
+  dep_glm
+  GIT_REPOSITORY "https://github.com/g-truc/glm"
+  GIT_TAG "0.9.9.8"
+  GIT_SHALLOW 1
+  UPDATE_COMMAND ""
+  PATCH_COMMAND ""
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND ""
+  TEST_COMMAND ""
+  INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${PROJECT_BINARY_DIR}/dep_glm-prefix/src/dep_glm/glm
+    ${CMAKE_SOURCE_DIR}/external/glm/include/glm
+)
+
 set(LIBS ${LIBS} 
     spdlog
+    glfw3
+    glad
+    imgui
 )
 
 #의존성 라이브러리 변수 (외부 라이브러리이기 때문에 먼저 빌드해야함)
 set(DEP_LIBS ${DEP_LIBS}
     dep_spdlog
-		 # glfw
-		 # imgui
+    dep_glfw
+    dep_glad
+    dep_glm
+    imgui
 )
 
 set(LIBS_DIR ${LIBS_DIR}
     ${CMAKE_SOURCE_DIR}/external/spdlog/lib
+    ${CMAKE_SOURCE_DIR}/external/glfw/lib
+    ${CMAKE_SOURCE_DIR}/external/glad/lib
+    ${CMAKE_SOURCE_DIR}/external/imgui/lib
 )
 
 set(SOURCE
@@ -119,11 +230,14 @@ set(SOURCE
 
 # Directories for header include
 set(INC
-        ${CMAKE_BINARY_DIR} # for chimera_api_export.h
-        ${CMAKE_SOURCE_DIR}
-        ${CMAKE_SOURCE_DIR}/include
-        ${CMAKE_SOURCE_DIR}/source
-        ${CMAKE_SOURCE_DIR}/external/spdlog/include
+  ${CMAKE_SOURCE_DIR}
+  ${CMAKE_SOURCE_DIR}/source
+  ${CMAKE_SOURCE_DIR}/include # scop에서 Config.h의 위치를 찾을 때, 여기 설정된 경로가 scop의 find_package를 통해 설정된다.
+  ${CMAKE_SOURCE_DIR}/external/spdlog/include
+  ${CMAKE_SOURCE_DIR}/external/glfw/include
+  ${CMAKE_SOURCE_DIR}/external/glad/include
+  ${CMAKE_SOURCE_DIR}/external/imgui/include
+  ${CMAKE_SOURCE_DIR}/external/glm/include
 )
 
 # ----------------------------------------------------------------------------
@@ -152,7 +266,11 @@ generate_export_header(${CMAKE_PROJECT_NAME}
         NO_EXPORT_MACRO_NAME    HIDE_FROM_API
         DEPRECATED_MACRO_NAME   DEPRECATED
 )
-
+# configure time에 생성된 헤더를 cm_util로 복사
+file(COPY ${CMAKE_BINARY_DIR}/chimera_api_export.h
+     DESTINATION ${CMAKE_SOURCE_DIR}/internal/cm_util)
+              
+# Set output path
 set_target_properties(${CMAKE_PROJECT_NAME}
   PROPERTIES 
     # remove default library output file's prefix ( default prefix = "lib" )
