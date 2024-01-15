@@ -183,6 +183,21 @@ ExternalProject_Add(
 ExternalProject_Get_property(dep_glad SOURCE_DIR)
 cm_printf("glad path : ${SOURCE_DIR}")
 
+# glm
+ExternalProject_Add(
+  dep_glm
+  GIT_REPOSITORY "https://github.com/g-truc/glm"
+  GIT_TAG "0.9.9.8"
+  GIT_SHALLOW 1
+  UPDATE_COMMAND ""
+  PATCH_COMMAND ""
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND ""
+  TEST_COMMAND ""
+  INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${PROJECT_BINARY_DIR}/dep_glm-prefix/src/dep_glm/glm
+    ${CMAKE_SOURCE_DIR}/external/glm/include/glm
+)
 
 set(LIBS ${LIBS} 
     spdlog
@@ -196,6 +211,7 @@ set(DEP_LIBS ${DEP_LIBS}
     dep_spdlog
     dep_glfw
     dep_glad
+    dep_glm
     imgui
 )
 
@@ -220,6 +236,7 @@ set(INC
   ${CMAKE_SOURCE_DIR}/external/glfw/include
   ${CMAKE_SOURCE_DIR}/external/glad/include
   ${CMAKE_SOURCE_DIR}/external/imgui/include
+  ${CMAKE_SOURCE_DIR}/external/glm/include
 )
 
 
