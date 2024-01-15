@@ -64,6 +64,41 @@ add_compile_definitions(
 
 # ----------------------------------------------------------------------------
 # Setting LIBS/SOURCE/INC
+include(FetchContent)
+
+FetchContent_Declare(
+  imgui
+  GIT_REPOSITORY https://github.com/ocornut/imgui.git
+  GIT_TAG master
+)
+
+FetchContent_GetProperties(imgui)
+if(NOT imgui_POPULATED)
+  FetchContent_Populate(imgui)
+  set(IMGUI_INCLUDE_DIR ${imgui_SOURCE_DIR})
+  cm_printf("imgui path : ${IMGUI_INCLUDE_DIR}")
+  set(IMGUI_SOURCES
+    ${imgui_SOURCE_DIR}/imgui.cpp
+    ${imgui_SOURCE_DIR}/imgui_demo.cpp
+    ${imgui_SOURCE_DIR}/imgui_draw.cpp
+    ${imgui_SOURCE_DIR}/imgui_tables.cpp
+    ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+  )
+  # platform 분기 필요 (window, MacOs, Linux)
+  # 당장은 window mac 모두 glfw opengl3 조합임으로 동일한 소스로 정적 라이브러리 만듬
+  if (APPLE OR WIN32)
+    list(APPEND IMGUI_SOURCES
+      ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+      ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+    )
+  endif ()
+endif()
+
+
+add_library(imgui STATIC ${IMGUI_SOURCES})
+add_dependencies(imgui dep_glfw)
+target_include_directories(imgui PRIVATE ${IMGUI_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/external/glfw/include)
+  
 
 if(APPLE)
 	INCLUDE_DIRECTORIES(/System/Library/Frameworks)
@@ -89,7 +124,14 @@ ExternalProject_Add(
   INSTALL_DIR ${CMAKE_SOURCE_DIR}/external/spdlog
   CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+  LOG_CONFIGURE ON
+  LOG_INSTALL ON
+  LOG_BUILD ON
+  LOG_OUTPUT_ON_FAILURE ON
 )
+ExternalProject_Get_property(dep_spdlog SOURCE_DIR)
+cm_printf("Spdlog path : ${SOURCE_DIR}")
+
 #glfw
 ExternalProject_Add(
   dep_glfw
@@ -99,23 +141,41 @@ ExternalProject_Add(
   INSTALL_DIR ${CMAKE_SOURCE_DIR}/external/glfw
   CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+  LOG_CONFIGURE ON
+  LOG_INSTALL ON
+  LOG_BUILD ON
+  LOG_OUTPUT_ON_FAILURE ON
 )
+ExternalProject_Get_property(dep_glfw SOURCE_DIR)
+cm_printf("glfw path : ${SOURCE_DIR}")
+
 #glad
 ExternalProject_Add(
-    dep_glad
-    GIT_REPOSITORY "https://github.com/Dav1dde/glad"
-    GIT_TAG "v0.1.36"
-    GIT_SHALLOW 1
-    INSTALL_DIR ${CMAKE_SOURCE_DIR}/external/glad
-    CMAKE_ARGS
-        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        -DGLAD_INSTALL=ON
+  dep_glad
+  GIT_REPOSITORY "https://github.com/Dav1dde/glad"
+  GIT_TAG "v0.1.36"
+  GIT_SHALLOW 1
+  INSTALL_DIR ${CMAKE_SOURCE_DIR}/external/glad
+  UPDATE_COMMAND ""
+  PATCH_COMMAND ""
+  TEST_COMMAND ""
+  CMAKE_ARGS
+      -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+      -DGLAD_INSTALL=ON
+  LOG_CONFIGURE ON
+  LOG_INSTALL ON
+  LOG_BUILD ON
+  LOG_OUTPUT_ON_FAILURE ON
 )
+ExternalProject_Get_property(dep_glad SOURCE_DIR)
+cm_printf("glad path : ${SOURCE_DIR}")
+
 
 set(LIBS ${LIBS} 
     spdlog
     glfw3
     glad
+    imgui
 )
 
 #의존성 라이브러리 변수 (외부 라이브러리이기 때문에 먼저 빌드해야함)
@@ -123,7 +183,7 @@ set(DEP_LIBS ${DEP_LIBS}
     dep_spdlog
     dep_glfw
     dep_glad
-		 # imgui
+    imgui
 )
 
 set(LIBS_DIR ${LIBS_DIR}
