@@ -10,6 +10,7 @@ binary
 engine/external/spdlog
 engine/external/glfw
 engine/external/glad
+engine/external/imgui
 # Prerequisites
 *.d
 
