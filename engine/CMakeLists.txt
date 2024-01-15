@@ -64,40 +64,53 @@ add_compile_definitions(
 
 # ----------------------------------------------------------------------------
 # Setting LIBS/SOURCE/INC
+# cmake config time에  소스  코드 다운로드
 include(FetchContent)
 
 FetchContent_Declare(
-  imgui
+  dep_imgui
   GIT_REPOSITORY https://github.com/ocornut/imgui.git
   GIT_TAG master
 )
 
-FetchContent_GetProperties(imgui)
-if(NOT imgui_POPULATED)
-  FetchContent_Populate(imgui)
-  set(IMGUI_INCLUDE_DIR ${imgui_SOURCE_DIR})
+FetchContent_GetProperties(dep_imgui)
+if(NOT dep_imgui_POPULATED)
+  FetchContent_Populate(dep_imgui)
+  set(IMGUI_INCLUDE_DIR ${dep_imgui_SOURCE_DIR})
   cm_printf("imgui path : ${IMGUI_INCLUDE_DIR}")
   set(IMGUI_SOURCES
-    ${imgui_SOURCE_DIR}/imgui.cpp
-    ${imgui_SOURCE_DIR}/imgui_demo.cpp
-    ${imgui_SOURCE_DIR}/imgui_draw.cpp
-    ${imgui_SOURCE_DIR}/imgui_tables.cpp
-    ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_demo.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_draw.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_tables.cpp
+    ${dep_imgui_SOURCE_DIR}/imgui_widgets.cpp
   )
   # platform 분기 필요 (window, MacOs, Linux)
   # 당장은 window mac 모두 glfw opengl3 조합임으로 동일한 소스로 정적 라이브러리 만듬
   if (APPLE OR WIN32)
     list(APPEND IMGUI_SOURCES
-      ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
-      ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+      ${dep_imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+      ${dep_imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
     )
   endif ()
+
+  #external 폴더로 헤더 복사
+  file(GLOB IMGUI_HEADERS1 "${dep_imgui_SOURCE_DIR}/*.h")
+  file(GLOB IMGUI_HEADERS2 "${dep_imgui_SOURCE_DIR}/backends/*.h")
+  set(IMGUI_HEADERS ${IMGUI_HEADERS1} ${IMGUI_HEADERS2})
+  file(COPY ${IMGUI_HEADERS} DESTINATION ${CMAKE_SOURCE_DIR}/external/imgui/include/imgui)
+
 endif()
 
 
 add_library(imgui STATIC ${IMGUI_SOURCES})
 add_dependencies(imgui dep_glfw)
 target_include_directories(imgui PRIVATE ${IMGUI_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/external/glfw/include)
+set_target_properties(imgui
+  PROPERTIES 
+    # Set CMAKE output directory : 최종 실행파일을 밖으로 빼기 위한 용도
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/external/imgui/lib
+)
   
 
 if(APPLE)
@@ -190,6 +203,7 @@ set(LIBS_DIR ${LIBS_DIR}
     ${CMAKE_SOURCE_DIR}/external/spdlog/lib
     ${CMAKE_SOURCE_DIR}/external/glfw/lib
     ${CMAKE_SOURCE_DIR}/external/glad/lib
+    ${CMAKE_SOURCE_DIR}/external/imgui/lib
 )
 
 set(SOURCE
@@ -205,6 +219,7 @@ set(INC
   ${CMAKE_SOURCE_DIR}/external/spdlog/include
   ${CMAKE_SOURCE_DIR}/external/glfw/include
   ${CMAKE_SOURCE_DIR}/external/glad/include
+  ${CMAKE_SOURCE_DIR}/external/imgui/include
 )
 
 
