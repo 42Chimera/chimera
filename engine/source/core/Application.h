@@ -1,35 +1,32 @@
-#pragma once
 #ifndef CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H
 #define CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H
 
-#include <memory>
+#include "core/Pch.h"
 #include "internal/CmUtil.h"
-
-// #include "Chimera/Core/Base.h"
-
-// #include "Chimera/Core/Window.h"
-// #include "Chimera/Core/LayerStack.h"
-// #include "Chimera/Events/Event.h"
-// #include "Chimera/Events/ApplicationEvent.h"
-
-// #include "Chimera/Core/Timestep.h"
-
-// #include "Chimera/ImGui/ImGuiLayer.h"
-
+#include "core/Window.h"
+#include "event/Event.h"
+#include "event/ApplicationEvent.h"
 namespace Cm {
 
-	class CHIMERA_API Application
-	{
-	public:
-		Application();
-		virtual ~Application();
+class CHIMERA_API Application {
+public:
+  Application();
+  virtual ~Application() = default;
 
-	public:
-		void Run();
-	};
+  void Run();
 
-	// To be defined in CLIENT
-	std::unique_ptr<Application> CreateApplication();
-}
+  void OnEvent(Event& event);
 
-#endif //CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H
+private:
+  bool OnWindowCloseEvent(WindowCloseEvent& event);
+
+private:
+  std::unique_ptr<Window> mWindow;
+  bool mRunning = true;
+};
+
+// To be defined in CLIENT
+std::unique_ptr<Application> CreateApplication();
+} // namespace Cm
+
+#endif // CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H
