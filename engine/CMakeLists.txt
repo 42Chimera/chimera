@@ -248,7 +248,7 @@ if (DEFINED BUILD_SHARED_LIBS AND BUILD_SHARED_LIBS STREQUAL "ON")
   if (WIN32)
     set(CHIMERA_LIBRARY_NAME ${CMAKE_PROJECT_NAME}${CMAKE_STATIC_LIBRARY_SUFFIX}) # Ex.ChimeraEngineCore.lib
     cm_printf_important(WARN "LIBRARY OUTPUT : Linker Input for Windows - ${CHIMERA_LIBRARY_NAME}")
-    cm_printf(STATUS "See also https://docs.microsoft.com/en-us/cpp/build/reference/linker-support-for-delay-loaded-dlls?view=msvc-160")
+    cm_printf(STATUS "See also https://learn.microsoft.com/en-us/cpp/build/reference/dot-lib-files-as-linker-input?view=msvc-170")
   else()
     set(CHIMERA_LIBRARY_NAME ${CMAKE_PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}) # Ex.ChimeraEngineCore.dylib
     cm_printf_important(WARN "LIBRARY OUTPUT : Dynamic Library - ${CHIMERA_LIBRARY_NAME}")
