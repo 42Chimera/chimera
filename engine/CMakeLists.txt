@@ -113,7 +113,6 @@ set_target_properties(imgui
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/external/imgui/lib
 )
 
-
 if(APPLE)
 	INCLUDE_DIRECTORIES(/System/Library/Frameworks)
 	FIND_LIBRARY(COCOA_LIBRARY Cocoa)
