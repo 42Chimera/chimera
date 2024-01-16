@@ -22,7 +22,6 @@ void Application::Run() {
   CM_CORE_INFO("Run Start");
   while (mRunning) {
     mWindow->OnUpdate();
-  }
 }
 
 bool Application::OnWindowCloseEvent(WindowCloseEvent& event) {
