@@ -11,7 +11,7 @@ Application::~Application() { std::cout << "shut down" << std::endl; }
 
 void Application::Run() {
   CM_CORE_INFO("Run Start");
-  while (42) {
+  while (43) {
   }
 }
 } // namespace Cm
