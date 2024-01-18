@@ -2,34 +2,45 @@
 #ifndef CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H
 #define CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H
 
+// system
 #include <memory>
+
+// extern
+#include "GLFW/glfw3.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
+
+// intern
 #include "internal/CmUtil.h"
 
-// #include "Chimera/Core/Base.h"
+struct GLFWwindow;
 
-// #include "Chimera/Core/Window.h"
-// #include "Chimera/Core/LayerStack.h"
-// #include "Chimera/Events/Event.h"
-// #include "Chimera/Events/ApplicationEvent.h"
+namespace Cm
+{
 
-// #include "Chimera/Core/Timestep.h"
+/**
+ * (1) Application은 Window를 자식으로 가지면 안된다. 둘은 별도이다.
+ */
+class CHIMERA_API Application : private NonCopyable
+{
+public:
+  Application(int argc, char** argv) noexcept;
+  virtual ~Application() noexcept;
+  bool Init() noexcept;
 
-// #include "Chimera/ImGui/ImGuiLayer.h"
+public:
+  int Run() noexcept;
+  int Reboot() noexcept;
+  int Shutdown() noexcept;
 
-namespace Cm {
+private:
+  bool mRunning;
+  // NOTE: 새로운 윈도우를 만드는 경우는 프로세스를 하나 더 파는 경우 뿐.
+  // 그럼 fork된 프로세스에서, 윈도우 루프를 새롭게 돌거 아닌가.
+};
 
-	class CHIMERA_API Application
-	{
-	public:
-		Application();
-		virtual ~Application();
 
-	public:
-		void Run();
-	};
-
-	// To be defined in CLIENT
-	std::unique_ptr<Application> CreateApplication();
-}
+} // namespace Cm
 
 #endif //CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H

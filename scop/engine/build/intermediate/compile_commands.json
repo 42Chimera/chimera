@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/kyeu/goinfree/chimera/scop/engine/build/intermediate",
+  "command": "/usr/bin/c++  -I/home/kyeu/goinfree/chimera/engine -I/home/kyeu/goinfree/chimera/engine/source -I/home/kyeu/goinfree/chimera/engine/include  -Werror -Wextra -Wall -Wno-long-long -g -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/Scop.dir/source/Scop.cpp.o -c /home/kyeu/goinfree/chimera/scop/source/Scop.cpp",
+  "file": "/home/kyeu/goinfree/chimera/scop/source/Scop.cpp",
+  "output": "CMakeFiles/Scop.dir/source/Scop.cpp.o"
+}
+]

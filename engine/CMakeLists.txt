@@ -225,6 +225,7 @@ set(LIBS_DIR ${LIBS_DIR}
 
 set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/core/Application.cpp
+  ${CMAKE_SOURCE_DIR}/source/core/Window.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Logger.cpp
 )
 

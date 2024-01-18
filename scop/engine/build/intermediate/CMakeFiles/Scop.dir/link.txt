@@ -1,0 +1,1 @@
+/usr/bin/c++  -Werror -Wextra -Wall -Wno-long-long -g CMakeFiles/Scop.dir/source/Scop.cpp.o -o /home/kyeu/goinfree/chimera/scop/binary/Scop  -Wl,-rpath,/home/kyeu/goinfree/chimera/engine/binary /home/kyeu/goinfree/chimera/engine/binary/ChimeraEngineCore.so 

@@ -1,0 +1,4 @@
+/home/kyeu/goinfree/chimera/scop/engine/build/intermediate/CMakeFiles/dep_chimera.dir
+/home/kyeu/goinfree/chimera/scop/engine/build/intermediate/CMakeFiles/Scop.dir
+/home/kyeu/goinfree/chimera/scop/engine/build/intermediate/CMakeFiles/edit_cache.dir
+/home/kyeu/goinfree/chimera/scop/engine/build/intermediate/CMakeFiles/rebuild_cache.dir

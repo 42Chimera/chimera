@@ -1,5 +1,5 @@
 #! /bin/bash
-rm -rf "$PWD/engine/build/intermediate"
+#rm -rf "$PWD/engine/build/intermediate"
 cmake -S "$PWD/engine" -B "$PWD/engine/build/intermediate" -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Debug
 
 # build

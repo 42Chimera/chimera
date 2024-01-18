@@ -9,6 +9,19 @@ project(${NAME} VERSION 1.0 LANGUAGES CXX)
 # Load Chimera's Local cmake util functions
 include(../engine/build/build_util/macros.cmake)
 
+# run build_dependency.sh script before compilation (ex. GLEW, GLFW)
+# TODO: 윈도우의 경우 bat 실행되도록.
+# ----------------------------------------------------------------------------
+#cm_printf_important(WARN "")
+#ADD_CUSTOM_TARGET(dep_chimera ALL)
+#add_subdirectory(../engine)
+#ADD_CUSTOM_COMMAND(
+#        TARGET dep_chimera
+#        COMMAND ${CMAKE_SOURCE_DIR}/../GenerateProjectFiles.sh
+#        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+#        COMMENT "TEST -----------------------------"
+#)
+
 # -----------------------------------------------------------------------------
 # Avoid having an empty `CMAKE_BUILD_TYPE` : 빌드 타입 명시가 없으면 기본 debug로 설정.
 if (NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
@@ -82,6 +95,7 @@ cm_printf_important(WARN "Executable output path : ${CMAKE_SOURCE_DIR}/binary")
   find_package(ChimeraEngineCore 0.0.1 REQUIRED)
   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ChimeraEngineCore_LIBRARIES})
   target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${ChimeraEngineCore_INCLUDE_DIR})
+  
 # -----------------------------------------------------------------------------
 
 if (WIN32)

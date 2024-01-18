@@ -1,0 +1,13 @@
+C:\WINDOWS\system32\wsl.exe --distribution Ubuntu --exec /bin/bash -c "export CMAKE_COLOR_DIAGNOSTICS=ON && export CLION_IDE=TRUE && export JETBRAINS_IDE=TRUE && cd /home/kyeu/goinfree/chimera/scop/engine/build/intermediate && /usr/local/bin/cmake -DCMAKE_BUILD_TYPE=Debug -B build/intermediate -DBUILD_SHARED_LIBS=ON -G 'CodeBlocks - Unix Makefiles' -S /home/kyeu/goinfree/chimera/scop -B /home/kyeu/goinfree/chimera/scop/engine/build/intermediate"
+   ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   ▏   CMAKE BUILD TYPE : Debug   ▕
+   ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+   Platform : Linux-5.15.133.1-microsoft-standard-WSL2
+   Compiler : GNU 11.4.0
+   Compile commands are saved to "build/compile_commands.json"
+   ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+   ▏   Executable output path : /home/kyeu/goinfree/chimera/scop/binary   ▕
+   ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/kyeu/goinfree/chimera/scop/engine/build/intermediate

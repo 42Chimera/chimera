@@ -4,6 +4,7 @@
 
 #include "internal/CmUtil.h"
 #include "source/core/Application.h"
+#include "source/core/Window.h"
 #include "source/core/Logger.h"
 
 #endif // CHIMERA_ENGINE_H

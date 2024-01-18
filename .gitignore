@@ -1,6 +1,6 @@
 # Editor files
 .vscode
-.idea
+#.idea --> 일부 빌드 세팅 체크용
 cmake-build-debug
 
 # Build output file
