@@ -55,7 +55,7 @@ jobs:
      # Ubuntu에서 특정 라이브러리 설치
     - name: Install dependencies on Ubuntu
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+      run: sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev
 
     # ... 기존의 'Set reusable strings' 단계 ...
 
