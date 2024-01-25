@@ -30,6 +30,7 @@ void Application::Run() {
 }
 
 bool Application::OnWindowCloseEvent(WindowCloseEvent& event) {
+  (void)event;
   mRunning = false;
   return true;
 }
