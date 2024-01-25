@@ -5,7 +5,10 @@
 
 namespace Cm {
 
+Application* Application::sInstance = nullptr;
+
 Application::Application() {
+  sInstance = this;
   mWindow = std::unique_ptr<Window>(Window::CreateWindow());
   mWindow->SetEventCallBack(
       std::bind(&Application::OnEvent, this, std::placeholders::_1));
@@ -18,10 +21,12 @@ void Application::OnEvent(Event& event) {
   dispatcher.Dispatch<WindowCloseEvent>(
       std::bind(&Application::OnWindowCloseEvent, this, std::placeholders::_1));
 }
+
 void Application::Run() {
   CM_CORE_INFO("Run Start");
   while (mRunning) {
     mWindow->OnUpdate();
+  }
 }
 
 bool Application::OnWindowCloseEvent(WindowCloseEvent& event) {

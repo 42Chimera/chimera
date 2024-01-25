@@ -17,12 +17,18 @@ public:
 
   void OnEvent(Event& event);
 
+  inline Application& Get() { return *sInstance; }
+  inline Window& GetWindow() { return *mWindow; }
+
 private:
   bool OnWindowCloseEvent(WindowCloseEvent& event);
 
 private:
   std::unique_ptr<Window> mWindow;
   bool mRunning = true;
+
+private:
+  static Application* sInstance;
 };
 
 // To be defined in CLIENT
