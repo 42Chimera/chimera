@@ -1,7 +1,7 @@
 @echo off
 
 if not exist "%~dp0Engine/CMakeLists.txt" goto Error_BatchFileInWrongLocation
-cmake -S "%~dp0Engine" -B "%~dp0Engine/build/intermediate" -DBUILD_SHARED_LIBS=ON -G "MinGW Makefiles" -DCMAKE_VERBOSE_MAKEFILE:BOOL=TRUE
+cmake -S "%~dp0Engine" -B "%~dp0Engine/build/intermediate" -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Debug
 cmake --build "%~dp0Engine/build/intermediate"
 exit /B %ERRORLEVEL%
 

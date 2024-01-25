@@ -112,7 +112,6 @@ set_target_properties(imgui
     # Set CMAKE output directory : 최종 실행파일을 밖으로 빼기 위한 용도
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/external/imgui/lib
 )
-  
 
 if(APPLE)
 	INCLUDE_DIRECTORIES(/System/Library/Frameworks)
@@ -144,6 +143,7 @@ ExternalProject_Add(
   LOG_OUTPUT_ON_FAILURE ON
 )
 ExternalProject_Get_property(dep_spdlog SOURCE_DIR)
+add_library(spdlog INTERFACE IMPORTED)
 cm_printf("Spdlog path : ${SOURCE_DIR}")
 
 #glfw
@@ -247,8 +247,14 @@ set(INC
 if (DEFINED BUILD_SHARED_LIBS AND BUILD_SHARED_LIBS STREQUAL "ON")
   add_library(${CMAKE_PROJECT_NAME} SHARED ${SOURCE})
   set(CM_SHARED_LIB TRUE)
-  set(CHIMERA_LIBRARY_NAME ${CMAKE_PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}) # Ex.ChimeraEngineCore.dylib
-  cm_printf_important(WARN "LIBRARY OUTPUT : Dynamic Library - ${CHIMERA_LIBRARY_NAME}")
+  if (WIN32)
+    set(CHIMERA_LIBRARY_NAME ${CMAKE_PROJECT_NAME}${CMAKE_STATIC_LIBRARY_SUFFIX}) # Ex.ChimeraEngineCore.lib
+    cm_printf_important(WARN "LIBRARY OUTPUT : Linker Input for Windows - ${CHIMERA_LIBRARY_NAME}")
+    cm_printf(STATUS "See also https://learn.microsoft.com/en-us/cpp/build/reference/dot-lib-files-as-linker-input?view=msvc-170")
+  else()
+    set(CHIMERA_LIBRARY_NAME ${CMAKE_PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}) # Ex.ChimeraEngineCore.dylib
+    cm_printf_important(WARN "LIBRARY OUTPUT : Dynamic Library - ${CHIMERA_LIBRARY_NAME}")
+  endif(WIN32)
 else()
   add_library(${CMAKE_PROJECT_NAME} STATIC ${SOURCE})
   set(CM_STATIC_LIB TRUE)
@@ -280,6 +286,18 @@ set_target_properties(${CMAKE_PROJECT_NAME}
     # Set CMAKE output directory : 최종 실행파일을 밖으로 빼기 위한 용도
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binary
 )
+
+if (MSVC)
+  set_target_properties(${CMAKE_PROJECT_NAME} 
+  PROPERTIES 
+  LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/binary
+  LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/binary
+  ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/binary
+  ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/binary
+  RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/binary
+  RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/binary
+  )
+endif (MSVC)
 
 # Pre-Compiled header
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/source/core/Pch.h)
