@@ -1,5 +1,4 @@
 #include "core/Layer.h"
-#include "Layer.h"
 
 namespace Cm
 {
