@@ -227,6 +227,8 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/core/Application.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Logger.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Window.cpp
+	${CMAKE_SOURCE_DIR}/source/core/Layer.cpp
+	${CMAKE_SOURCE_DIR}/source/core/LayerStack.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/window/MacOSWindow.cpp
 )
 
