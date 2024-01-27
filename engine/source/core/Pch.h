@@ -13,6 +13,5 @@
 #include <unordered_set>
 #include <vector>
 
-#include "Logger.h"
-
+#include "core/Logger.h"
 #endif//CHIMERA_ENGINE_SOURCE_CORE_PCH_H
