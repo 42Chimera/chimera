@@ -16,7 +16,10 @@ public:
   virtual void OnDetach() = 0;
   virtual void OnUpdate() {}
   virtual void OnImguiRender() {}
-  virtual void OnEvent( Event& event );
+  virtual void OnEvent( Event& event )
+  {
+    (void)event;
+  }
 
   inline const std::string GetName() const
   {
