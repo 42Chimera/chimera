@@ -12,8 +12,8 @@ public:
   Layer( const std::string& name = "Layer" );
   virtual ~Layer() = default;
 
-  virtual void OnAttatch() = 0;
-  virtual void OnDetach() = 0;
+  virtual void OnAttatch() {}
+  virtual void OnDetach() {}
   virtual void OnUpdate() {}
   virtual void OnImguiRender() {}
   virtual void OnEvent( Event& event )
