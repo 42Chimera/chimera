@@ -9,7 +9,6 @@ public:
   }
   void OnUpdate() override
   {
-    CM_CLIENT_TRACE( "Example Layer OnUpdate() called" );
   }
 
   void OnEvent( Cm::Event& event ) override

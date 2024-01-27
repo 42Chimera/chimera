@@ -67,6 +67,8 @@ void MacOSWindow::Init( const WindowProps& props )
   glfwSetKeyCallback( mWindow, []( GLFWwindow* window, int key, int scancode, int action, int mods )
                       {
                         WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+                        (void) scancode;
+                        (void) mods;
                         switch (action)
                         {
                           case GLFW_PRESS:
@@ -92,6 +94,7 @@ void MacOSWindow::Init( const WindowProps& props )
   glfwSetMouseButtonCallback( mWindow, []( GLFWwindow* window, int button, int action, int mods )
                               {
                                 WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window ); 
+                                (void) mods;
                                 switch (action)
                                 {
                                   case GLFW_PRESS:
