@@ -32,6 +32,11 @@ public:
   void SetVSync( bool enabled ) override;
   bool IsVSync() const override;
 
+  virtual void* GetNativeWindow() const override
+  {
+    return mWindow;
+  }
+
 private:
   void Init( const WindowProps& props );
   void Shutdown();

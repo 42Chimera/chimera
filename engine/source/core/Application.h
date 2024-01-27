@@ -23,7 +23,7 @@ public:
   void PushLayer( Layer* layer );
   void PushOverLay( Layer* overlay );
 
-  inline Application& Get()
+  static Application& Get()
   {
     return *sInstance;
   }
