@@ -51,6 +51,7 @@ void MacOSWindow::Init( const WindowProps& props )
     WindowCloseEvent event;
     data.EventCallBack(event); } );
 }
+
 void MacOSWindow::Shutdown()
 {
   glfwDestroyWindow( mWindow );
@@ -61,6 +62,7 @@ void MacOSWindow::OnUpdate()
   glfwPollEvents();
   glfwSwapBuffers( mWindow );
 }
+
 void MacOSWindow::SetVSync( bool enabled )
 {
   if ( enabled )
@@ -73,6 +75,7 @@ void MacOSWindow::SetVSync( bool enabled )
   }
   mData.VSync = enabled;
 }
+
 bool MacOSWindow::IsVSync() const
 {
   return mData.VSync;

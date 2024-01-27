@@ -3,35 +3,41 @@
 #include "internal/CmUtil.h"
 #include "core/Application.h"
 
-namespace Cm {
+namespace Cm
+{
 
 Application* Application::sInstance = nullptr;
 
-Application::Application() {
+Application::Application()
+{
   sInstance = this;
-  mWindow = std::unique_ptr<Window>(Window::CreateWindow());
+  mWindow = std::unique_ptr<Window>( Window::CreateWindow() );
   mWindow->SetEventCallBack(
-      std::bind(&Application::OnEvent, this, std::placeholders::_1));
+  std::bind( &Application::OnEvent, this, std::placeholders::_1 ) );
 }
 
-void Application::OnEvent(Event& event) {
-  CM_CORE_TRACE("{0}", event);
+void Application::OnEvent( Event& event )
+{
+  CM_CORE_TRACE( "{0}", event );
 
-  EventDispatcher dispatcher(event);
+  EventDispatcher dispatcher( event );
   dispatcher.Dispatch<WindowCloseEvent>(
-      std::bind(&Application::OnWindowCloseEvent, this, std::placeholders::_1));
+  std::bind( &Application::OnWindowCloseEvent, this, std::placeholders::_1 ) );
 }
 
-void Application::Run() {
-  CM_CORE_INFO("Run Start");
-  while (mRunning) {
+void Application::Run()
+{
+  CM_CORE_INFO( "Run Start" );
+  while ( mRunning )
+  {
     mWindow->OnUpdate();
   }
 }
 
-bool Application::OnWindowCloseEvent(WindowCloseEvent& event) {
+bool Application::OnWindowCloseEvent( WindowCloseEvent& event )
+{
   (void)event;
   mRunning = false;
   return true;
 }
-} // namespace Cm
+}// namespace Cm

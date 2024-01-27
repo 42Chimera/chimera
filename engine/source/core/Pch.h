@@ -1,4 +1,3 @@
-#pragma once
 #ifndef CHIMERA_ENGINE_SOURCE_CORE_PCH_H
 #define CHIMERA_ENGINE_SOURCE_CORE_PCH_H
 

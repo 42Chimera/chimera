@@ -6,29 +6,39 @@
 #include "core/Window.h"
 #include "GLFW/glfw3.h"
 
-namespace Cm {
-class MacOSWindow : public Window {
+namespace Cm
+{
+class MacOSWindow : public Window
+{
 public:
-  MacOSWindow(const WindowProps& props);
+  MacOSWindow( const WindowProps& props );
   virtual ~MacOSWindow();
 
   void OnUpdate() override;
 
-  inline uint32_t GetWidth() const override { return mData.Width; }
-  inline uint32_t GetHeight() const override { return mData.Height; }
+  inline uint32_t GetWidth() const override
+  {
+    return mData.Width;
+  }
+  inline uint32_t GetHeight() const override
+  {
+    return mData.Height;
+  }
 
-  inline void SetEventCallBack(const EventCallBackFunction& callBack) override {
+  inline void SetEventCallBack( const EventCallBackFunction& callBack ) override
+  {
     mData.EventCallBack = callBack;
   }
-  void SetVSync(bool enabled) override;
+  void SetVSync( bool enabled ) override;
   bool IsVSync() const override;
 
 private:
-  void Init(const WindowProps& props);
+  void Init( const WindowProps& props );
   void Shutdown();
 
   GLFWwindow* mWindow;
-  struct WindowData {
+  struct WindowData
+  {
     std::string Title;
     uint32_t Width, Height;
     bool VSync;
@@ -38,5 +48,5 @@ private:
 
   WindowData mData;
 };
-} // namespace Cm
+}// namespace Cm
 #endif
