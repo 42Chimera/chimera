@@ -6,6 +6,7 @@
 #include "core/Window.h"
 #include "event/Event.h"
 #include "event/ApplicationEvent.h"
+#include "core/LayerStack.h"
 namespace Cm
 {
 
@@ -18,6 +19,9 @@ public:
   void Run();
 
   void OnEvent( Event& event );
+
+  void PushLayer( Layer* layer );
+  void PushOverLay( Layer* overlay );
 
   inline Application& Get()
   {
@@ -33,6 +37,7 @@ private:
 
 private:
   std::unique_ptr<Window> mWindow;
+  LayerStack mLayerStack;
   bool mRunning = true;
 
 private:

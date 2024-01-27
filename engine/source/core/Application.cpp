@@ -23,6 +23,15 @@ void Application::OnEvent( Event& event )
   EventDispatcher dispatcher( event );
   dispatcher.Dispatch<WindowCloseEvent>(
   std::bind( &Application::OnWindowCloseEvent, this, std::placeholders::_1 ) );
+
+  for ( auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); ++it )
+  {
+    if ( event.Handled )
+    {
+      break;
+    }
+    ( *it )->OnEvent( event );
+  }
 }
 
 void Application::Run()
@@ -30,8 +39,24 @@ void Application::Run()
   CM_CORE_INFO( "Run Start" );
   while ( mRunning )
   {
+    for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
+    {
+      ( *it )->OnUpdate();
+    }
     mWindow->OnUpdate();
   }
+}
+
+void Application::PushLayer( Layer* layer )
+{
+  mLayerStack.PushLayer( layer );
+  layer->OnAttatch();
+}
+
+void Application::PushOverLay( Layer* overlay )
+{
+  mLayerStack.PushOverlay( overlay );
+  overlay->OnAttatch();
 }
 
 bool Application::OnWindowCloseEvent( WindowCloseEvent& event )
