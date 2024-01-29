@@ -50,3 +50,6 @@ engine/internal/cm_util/chimera_api_export.h
 *.exe
 *.out
 *.app
+
+#imgui
+imgui.ini
