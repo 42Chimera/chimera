@@ -7,6 +7,7 @@
 #include "event/Event.h"
 #include "event/ApplicationEvent.h"
 #include "core/LayerStack.h"
+#include "imgui/ImguiLayer.h"
 namespace Cm
 {
 
@@ -37,6 +38,7 @@ private:
 
 private:
   std::unique_ptr<Window> mWindow;
+  ImguiLayer* mImguiLayer;
   LayerStack mLayerStack;
   bool mRunning = true;
 
