@@ -53,15 +53,9 @@ add_compile_definitions(
   $<IF:$<CONFIG:Debug>,CM_DEBUG,CM_RELEASE> # Set build-type define variable
   GLM_FORCE_SWIZZLE # force GLM to report the configuration as part of the build log
 )
-
-# -----------------------------------------------------------------------------
-# file(GLOB PLUGINS
-	# external/glad
-	# external/glfw
-	# )
-# foreach(plugin IN LISTS PLUGINS)
-#	add_subdirectory(${plugin})	
-# endforeach()
+# -------------------------------------------------------------------------------
+# Set Position Independent code
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # ----------------------------------------------------------------------------
 # Setting LIBS/SOURCE/INC
