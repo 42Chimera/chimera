@@ -15,6 +15,12 @@ public:
   {
     CM_CLIENT_TRACE( "{0}", event );
   }
+  virtual void OnImguiRender() override
+  {
+    ImGui::Begin( "Test" );
+    ImGui::Text( "Hello!!" );
+    ImGui::End();
+  }
 };
 
 class Scop : public Cm::Application
