@@ -42,7 +42,7 @@ if (MSVC)
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
     endif()
-elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
+elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID STREQUAL "Clang") OR (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang"))
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -Wall -Wno-long-long")
 endif()
 
@@ -226,6 +226,8 @@ set(LIBS_DIR ${LIBS_DIR}
 set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/core/Application.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Logger.cpp
+	${CMAKE_SOURCE_DIR}/source/core/Window.cpp
+	${CMAKE_SOURCE_DIR}/source/platform/window/MacOSWindow.cpp
 )
 
 # Directories for header include
