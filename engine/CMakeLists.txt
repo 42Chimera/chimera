@@ -231,6 +231,7 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/core/LayerStack.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/window/MacOSWindow.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/input/MacOSInput.cpp
+	${CMAKE_SOURCE_DIR}/source/imgui/ImguiLayer.cpp
 )
 
 # Directories for header include
