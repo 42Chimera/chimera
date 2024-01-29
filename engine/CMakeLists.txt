@@ -71,7 +71,7 @@ include(FetchContent)
 FetchContent_Declare(
   dep_imgui
   GIT_REPOSITORY https://github.com/ocornut/imgui.git
-  GIT_TAG master
+  GIT_TAG docking
 )
 
 FetchContent_GetProperties(dep_imgui)
