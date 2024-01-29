@@ -1,3 +1,5 @@
+#include "glad/glad.h"
+
 #include "core/Window.h"
 #include "platform/window/MacOSWindow.h"
 #include "event/ApplicationEvent.h"
@@ -37,12 +39,18 @@ void MacOSWindow::Init( const WindowProps& props )
     }
   }
 
+  glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
+  glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 2 );
+  glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );// 3.2+ only
+  glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );          // Required on Mac
+
   mWindow = glfwCreateWindow( static_cast<int>( props.Width ),
                               static_cast<int>( props.Height ),
                               props.Title.c_str(),
                               nullptr,
                               nullptr );
   glfwMakeContextCurrent( mWindow );
+  gladLoadGLLoader( (GLADloadproc)glfwGetProcAddress );
   glfwSetWindowUserPointer( mWindow, &mData );
   SetVSync( true );
 
