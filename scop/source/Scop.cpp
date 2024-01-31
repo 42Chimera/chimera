@@ -1,19 +1,49 @@
 #include "Chimera.h"
 
-class Scop : public Cm::Application {
+class ExampleLayer : public Cm::Layer
+{
 public:
-  Scop() : Application() { std::cout << "hello scope!" << std::endl; }
+  ExampleLayer()
+      : Layer( "ExampleLayer" )
+  {
+  }
+  void OnUpdate() override
+  {
+  }
+
+  void OnEvent( Cm::Event& event ) override
+  {
+    CM_CLIENT_TRACE( "{0}", event );
+  }
+  virtual void OnImguiRender() override
+  {
+    ImGui::Begin( "Test" );
+    ImGui::Text( "Hello!!" );
+    ImGui::End();
+  }
 };
 
-std::unique_ptr<Cm::Application> Cm::CreateApplication() {
+class Scop : public Cm::Application
+{
+public:
+  Scop()
+      : Application()
+  {
+    PushLayer( new ExampleLayer() );
+  }
+};
+
+std::unique_ptr<Cm::Application> Cm::CreateApplication()
+{
   return std::make_unique<Scop>();
 }
 
-int main(int ac, char** av) {
-	(void)ac;
-	(void)av;
+int main( int ac, char** av )
+{
+  (void)ac;
+  (void)av;
   Cm::Logger::Init();
-  CM_CLIENT_INFO("Scop Start");
+  CM_CLIENT_INFO( "SCOP START!!" );
   auto scop = Cm::CreateApplication();
   scop->Run();
   return 0;

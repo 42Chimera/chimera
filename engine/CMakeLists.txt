@@ -53,15 +53,9 @@ add_compile_definitions(
   $<IF:$<CONFIG:Debug>,CM_DEBUG,CM_RELEASE> # Set build-type define variable
   GLM_FORCE_SWIZZLE # force GLM to report the configuration as part of the build log
 )
-
-# -----------------------------------------------------------------------------
-# file(GLOB PLUGINS
-	# external/glad
-	# external/glfw
-	# )
-# foreach(plugin IN LISTS PLUGINS)
-#	add_subdirectory(${plugin})	
-# endforeach()
+# -------------------------------------------------------------------------------
+# Set Position Independent code
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # ----------------------------------------------------------------------------
 # Setting LIBS/SOURCE/INC
@@ -71,7 +65,7 @@ include(FetchContent)
 FetchContent_Declare(
   dep_imgui
   GIT_REPOSITORY https://github.com/ocornut/imgui.git
-  GIT_TAG master
+  GIT_TAG docking
 )
 
 FetchContent_GetProperties(dep_imgui)
@@ -176,6 +170,7 @@ ExternalProject_Add(
   CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
       -DGLAD_INSTALL=ON
+      -DCMAKE_POSITION_INDEPENDENT_CODE=ON
   LOG_CONFIGURE ON
   LOG_INSTALL ON
   LOG_BUILD ON
@@ -227,7 +222,11 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/core/Application.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Logger.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Window.cpp
+	${CMAKE_SOURCE_DIR}/source/core/Layer.cpp
+	${CMAKE_SOURCE_DIR}/source/core/LayerStack.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/window/MacOSWindow.cpp
+	${CMAKE_SOURCE_DIR}/source/platform/input/MacOSInput.cpp
+	${CMAKE_SOURCE_DIR}/source/imgui/ImguiLayer.cpp
 )
 
 # Directories for header include

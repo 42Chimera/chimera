@@ -1,9 +1,11 @@
 #include "core/Window.h"
 #include "platform/window/MacOSWindow.h"
 
-namespace Cm {
+namespace Cm
+{
 
-Window* Window::CreateWindow(const WindowProps& props) {
+Window* Window::CreateWindow( const WindowProps& props )
+{
   // 나중에 구현 필요
   // #ifdef CM_PLATFORM_MACOS
   //   return new MacOSWindow(props);
@@ -13,7 +15,7 @@ Window* Window::CreateWindow(const WindowProps& props) {
   //   CM_ASSERT_COMPILE("Platform Error : ", false, "not supported platform");
   //   return nullptr;
   // #endif
-  return new MacOSWindow(props);
+  return new MacOSWindow( props );
 }
 
-} // namespace Cm
+}// namespace Cm
