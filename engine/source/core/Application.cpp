@@ -6,8 +6,6 @@
 namespace Cm
 {
 
-Application* Application::sInstance = nullptr;
-
 Application::Application()
 {
   sInstance = this;
@@ -69,6 +67,11 @@ void Application::PushOverLay( Layer* overlay )
 {
   mLayerStack.PushOverlay( overlay );
   overlay->OnAttatch();
+}
+
+Application& Application::Get()
+{
+  return *sInstance;
 }
 
 bool Application::OnWindowCloseEvent( WindowCloseEvent& event )

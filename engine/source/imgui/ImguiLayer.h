@@ -5,16 +5,16 @@
 
 namespace Cm
 {
-class CHIMERA_API ImguiLayer : public Layer
+class ImguiLayer : public Layer
 {
 public:
-  ImguiLayer( const std::string& name );
-  virtual void OnAttatch() override;
-  virtual void OnDetach() override;
-  virtual void OnImguiRender() override;
+  CHIMERA_API ImguiLayer( const std::string& name );
+  CHIMERA_API virtual void OnAttatch() override;
+  CHIMERA_API virtual void OnDetach() override;
+  CHIMERA_API virtual void OnImguiRender() override;
 
-  void begin();
-  void end();
+  CHIMERA_API void begin();
+  CHIMERA_API void end();
 };
 
 }// namespace Cm
