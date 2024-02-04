@@ -14,4 +14,5 @@
 #include <vector>
 
 #include "core/Logger.h"
+#include "internal/CmUtil.h"
 #endif//CHIMERA_ENGINE_SOURCE_CORE_PCH_H
