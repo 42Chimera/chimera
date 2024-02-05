@@ -224,8 +224,16 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/core/Window.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Layer.cpp
 	${CMAKE_SOURCE_DIR}/source/core/LayerStack.cpp
+
+	${CMAKE_SOURCE_DIR}/source/render/Renderer.cpp
+	${CMAKE_SOURCE_DIR}/source/render/RenderAPI.cpp
+	${CMAKE_SOURCE_DIR}/source/render/RenderContext.cpp
+	${CMAKE_SOURCE_DIR}/source/render/RenderContext.cpp
+
 	${CMAKE_SOURCE_DIR}/source/platform/window/MacOSWindow.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/input/MacOSInput.cpp
+	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLRenderContext.cpp
+
 	${CMAKE_SOURCE_DIR}/source/imgui/ImguiLayer.cpp
 )
 
