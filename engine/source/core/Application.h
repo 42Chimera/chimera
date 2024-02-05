@@ -23,7 +23,12 @@ public:
   CHIMERA_API void PushLayer( Layer* layer );
   CHIMERA_API void PushOverLay( Layer* overlay );
 
-  CHIMERA_API static Application& Get();
+  static Application& Get()
+  {
+    static Application sInstance;
+
+    return sInstance;
+  }
 
   inline Window& GetWindow()
   {
@@ -38,9 +43,6 @@ private:
   ImguiLayer* mImguiLayer;
   LayerStack mLayerStack;
   bool mRunning = true;
-
-private:
-  inline static Application* sInstance;
 };
 
 // To be defined in CLIENT

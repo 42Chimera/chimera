@@ -8,7 +8,6 @@ namespace Cm
 
 Application::Application()
 {
-  sInstance = this;
   mWindow = std::unique_ptr<Window>( Window::CreateWindow() );
   mWindow->SetEventCallBack(
   std::bind( &Application::OnEvent, this, std::placeholders::_1 ) );
@@ -67,11 +66,6 @@ void Application::PushOverLay( Layer* overlay )
 {
   mLayerStack.PushOverlay( overlay );
   overlay->OnAttatch();
-}
-
-Application& Application::Get()
-{
-  return *sInstance;
 }
 
 bool Application::OnWindowCloseEvent( WindowCloseEvent& event )
