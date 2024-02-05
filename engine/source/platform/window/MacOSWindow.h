@@ -4,6 +4,7 @@
 #include "internal/CmUtil.h"
 #include "core/Pch.h"
 #include "core/Window.h"
+#include "render/RenderContext.h"
 #include "GLFW/glfw3.h"
 
 namespace Cm
@@ -42,6 +43,7 @@ private:
   void Shutdown();
 
   GLFWwindow* mWindow;
+  std::unique_ptr<RenderContext> mRenderContext;
   struct WindowData
   {
     std::string Title;
