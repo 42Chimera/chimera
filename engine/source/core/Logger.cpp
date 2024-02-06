@@ -2,8 +2,6 @@
 
 namespace Cm
 {
-std::shared_ptr<spdlog::logger> Logger::sCoreLogger;
-std::shared_ptr<spdlog::logger> Logger::sClientLogger;
 
 void Logger::Init()
 {
@@ -14,5 +12,15 @@ void Logger::Init()
 
   sClientLogger = spdlog::stdout_color_mt( "Scop" );
   sClientLogger->set_level( spdlog::level::trace );
+}
+
+std::shared_ptr<spdlog::logger>& Logger::GetCoreLogger()
+{
+  return sCoreLogger;
+}
+
+std::shared_ptr<spdlog::logger>& Logger::GetClientLogger()
+{
+  return sClientLogger;
 }
 }// namespace Cm

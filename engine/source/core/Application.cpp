@@ -6,11 +6,8 @@
 namespace Cm
 {
 
-Application* Application::sInstance = nullptr;
-
 Application::Application()
 {
-  sInstance = this;
   mWindow = std::unique_ptr<Window>( Window::CreateWindow() );
   mWindow->SetEventCallBack(
   std::bind( &Application::OnEvent, this, std::placeholders::_1 ) );

@@ -2,8 +2,8 @@
 
 if not exist "%~dp0/setup.bat" goto Error_BatchFileInWrongLocation
 cmake -E remove_directory build/intermediate
-cmake -B build/intermediate -DBUILD_SHARED_LIBS=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=TRUE
-cmake --build build/intermediate -j4
+cmake -B build/intermediate -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/intermediate --config Debug -j4
 exit /B %ERRORLEVEL%
 
 :Error_BatchFileInWrongLocation

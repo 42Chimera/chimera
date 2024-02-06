@@ -5,16 +5,16 @@
 
 namespace Cm
 {
-class CHIMERA_API LayerStack
+class LayerStack
 {
 public:
   LayerStack() = default;
-  ~LayerStack();
+  CHIMERA_API ~LayerStack();
 
-  void PushLayer( Layer* layer );
-  void PushOverlay( Layer* overlay );
-  void PopLayer( Layer* layer );
-  void PopOverlay( Layer* overlay );
+  CHIMERA_API void PushLayer( Layer* layer );
+  CHIMERA_API void PushOverlay( Layer* overlay );
+  CHIMERA_API void PopLayer( Layer* layer );
+  CHIMERA_API void PopOverlay( Layer* overlay );
 
   std::vector<Layer*>::iterator begin()
   {

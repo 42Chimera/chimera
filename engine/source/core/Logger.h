@@ -10,23 +10,17 @@
 
 namespace Cm
 {
-class CHIMERA_API Logger
+class Logger
 {
 public:
-  static void Init();
+  CHIMERA_API static void Init();
 
-  inline static std::shared_ptr<spdlog::logger>& GetCoreLogger()
-  {
-    return sCoreLogger;
-  }
-  inline static std::shared_ptr<spdlog::logger>& GetClientLogger()
-  {
-    return sClientLogger;
-  }
+  CHIMERA_API static std::shared_ptr<spdlog::logger>& GetCoreLogger();
+  CHIMERA_API static std::shared_ptr<spdlog::logger>& GetClientLogger();
 
 private:
-  static std::shared_ptr<spdlog::logger> sCoreLogger;
-  static std::shared_ptr<spdlog::logger> sClientLogger;
+  inline static std::shared_ptr<spdlog::logger> sCoreLogger;
+  inline static std::shared_ptr<spdlog::logger> sClientLogger;
 };
 
 // Core Logger Macro
