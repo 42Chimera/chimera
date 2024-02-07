@@ -25,9 +25,7 @@ public:
 
   static Application& Get()
   {
-    static Application sInstance;
-
-    return sInstance;
+    return *sInstance;
   }
 
   inline Window& GetWindow()
@@ -39,6 +37,7 @@ private:
   CHIMERA_API bool OnWindowCloseEvent( WindowCloseEvent& event );
 
 private:
+  inline static Application* sInstance;
   std::unique_ptr<Window> mWindow;
   ImguiLayer* mImguiLayer;
   LayerStack mLayerStack;

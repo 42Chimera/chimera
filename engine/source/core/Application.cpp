@@ -8,6 +8,8 @@ namespace Cm
 
 Application::Application()
 {
+  CM_ASSERT_DEV( "jinypark", ( !sInstance ), "Application already exists" );
+  sInstance = this;
   mWindow = std::unique_ptr<Window>( Window::CreateWindow() );
   mWindow->SetEventCallBack(
   std::bind( &Application::OnEvent, this, std::placeholders::_1 ) );
