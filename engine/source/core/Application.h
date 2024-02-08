@@ -10,44 +10,43 @@
 #include "imgui/ImguiLayer.h"
 namespace Cm
 {
-
-class CHIMERA_API Application
+class Application
 {
 public:
-  Application();
+  CHIMERA_API Application();
   virtual ~Application() = default;
 
-  void Run();
+  CHIMERA_API void Run();
 
-  void OnEvent( Event& event );
+  CHIMERA_API void OnEvent( Event& event );
 
-  void PushLayer( Layer* layer );
-  void PushOverLay( Layer* overlay );
+  CHIMERA_API void PushLayer( Layer* layer );
+  CHIMERA_API void PushOverLay( Layer* overlay );
 
   static Application& Get()
   {
     return *sInstance;
   }
+
   inline Window& GetWindow()
   {
     return *mWindow;
   }
 
 private:
-  bool OnWindowCloseEvent( WindowCloseEvent& event );
+  CHIMERA_API bool OnWindowCloseEvent( WindowCloseEvent& event );
 
 private:
+  inline static Application* sInstance;
   std::unique_ptr<Window> mWindow;
   ImguiLayer* mImguiLayer;
   LayerStack mLayerStack;
   bool mRunning = true;
-
-private:
-  static Application* sInstance;
 };
 
 // To be defined in CLIENT
 std::unique_ptr<Application> CreateApplication();
 }// namespace Cm
+
 
 #endif// CHIMERA_ENGINE_SOURCE_CORE_APPLICATION_H

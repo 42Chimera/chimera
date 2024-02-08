@@ -40,7 +40,7 @@ if (MSVC)
     if (CMAKE_CXX_FLAGS MATCHES "/W[0-4]") # Force to always compile with W4
         string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     else()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /wd4201 /wd4244")
     endif()
 elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID STREQUAL "Clang") OR (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang"))
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -Wall -Wno-long-long")
@@ -53,6 +53,13 @@ add_compile_definitions(
   $<IF:$<CONFIG:Debug>,CM_DEBUG,CM_RELEASE> # Set build-type define variable
   GLM_FORCE_SWIZZLE # force GLM to report the configuration as part of the build log
 )
+
+ # Set source and execution character set to UTF-8
+if(MSVC)
+add_compile_options(
+  /utf-8
+)
+endif()
 # -------------------------------------------------------------------------------
 # Set Position Independent code
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -304,6 +311,10 @@ if (MSVC)
   RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/binary
   RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/binary
   )
+  target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+  $<$<CONFIG:Debug>:CM_DEBUG>
+  $<$<CONFIG:Release>:CM_RELEASE>
+)
 endif (MSVC)
 
 # Pre-Compiled header

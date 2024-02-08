@@ -58,9 +58,20 @@ set(SRC
   source/Scop.cpp
   )
 
+if(MSVC)
+  add_compile_options(/utf-8)
+endif()
+
 add_executable( ${CMAKE_PROJECT_NAME} ${SRC} )
 target_link_libraries( ${CMAKE_PROJECT_NAME} ${LIB} )
 target_include_directories( ${CMAKE_PROJECT_NAME} PUBLIC ${INC} )
+
+if(MSVC)
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+  $<$<CONFIG:Debug>:CM_DEBUG>
+  $<$<CONFIG:Release>:CM_RELEASE>
+)
+endif()
 
 # Set executable output directory
 set_target_properties(${CMAKE_PROJECT_NAME}
