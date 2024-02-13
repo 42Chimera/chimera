@@ -16,6 +16,36 @@ Application::Application()
 
   mImguiLayer = new ImguiLayer( "Imgui_Layer" );
   PushOverLay( mImguiLayer );
+
+  // glViewport( 0, 0, mWindow.get()->GetWidth(), mWindow.get()->GetHeight() );
+  glGenVertexArrays( 1, &mVertexBufferArray );
+  glBindVertexArray( mVertexBufferArray );
+
+  float vertices[9] = {
+  -0.5f,
+  -0.5f,
+  0.0f,
+  0.5f,
+  -0.5f,
+  0.0f,
+  0.0f,
+  0.5f,
+  0.0f };
+
+  glGenBuffers( 1, &mVertexBuffer );
+  glBindBuffer( GL_ARRAY_BUFFER, mVertexBuffer );
+  glBufferData( GL_ARRAY_BUFFER, sizeof( vertices ), vertices, GL_STATIC_DRAW );
+
+  glEnableVertexAttribArray( 0 );
+  glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), (const void*)nullptr );
+
+
+  unsigned int indices[3] = { 0, 1, 2 };
+  glGenBuffers( 1, &mIndexBuffer );
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer );
+  glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( indices ), indices, GL_STREAM_DRAW );
+
+  mShader = Shader::Create( "engine/asset/shader/simple.vs", "engine/asset/shader/simple.fs" );
 }
 
 void Application::OnEvent( Event& event )
@@ -39,8 +69,12 @@ void Application::Run()
   CM_CORE_INFO( "Run Start" );
   while ( mRunning )
   {
-    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+    glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT );
+
+    mShader->Bind();
+    glBindVertexArray( mVertexBufferArray );
+    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr );
     for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
     {
       ( *it )->OnUpdate();

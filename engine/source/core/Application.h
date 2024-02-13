@@ -8,6 +8,7 @@
 #include "event/ApplicationEvent.h"
 #include "core/LayerStack.h"
 #include "imgui/ImguiLayer.h"
+#include "render/Shader.h"
 namespace Cm
 {
 class Application
@@ -42,6 +43,11 @@ private:
   ImguiLayer* mImguiLayer;
   LayerStack mLayerStack;
   bool mRunning = true;
+
+  uint32_t mVertexBufferArray;
+  uint32_t mVertexBuffer;
+  uint32_t mIndexBuffer;
+  std::unique_ptr<Shader> mShader;
 };
 
 // To be defined in CLIENT
