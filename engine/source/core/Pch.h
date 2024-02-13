@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 #include <optional>
+#include <initializer_list>
 
 #include <fstream>
 #include <sstream>
