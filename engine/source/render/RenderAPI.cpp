@@ -22,6 +22,7 @@ std::unique_ptr<RenderAPI> RenderAPI::Create()
       return nullptr;
     }
   }
+  return nullptr;
 }
 
 RenderAPI::API RenderAPI::GetAPI()
