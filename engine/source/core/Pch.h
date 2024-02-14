@@ -6,7 +6,9 @@
 #include <iostream>
 #include <memory>
 #include <utility>
+#include <optional>
 
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <unordered_map>
@@ -14,4 +16,5 @@
 #include <vector>
 
 #include "core/Logger.h"
+#include "internal/CmUtil.h"
 #endif//CHIMERA_ENGINE_SOURCE_CORE_PCH_H

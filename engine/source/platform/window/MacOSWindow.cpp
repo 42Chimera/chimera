@@ -1,5 +1,3 @@
-#include "glad/glad.h"
-
 #include "core/Window.h"
 #include "platform/window/MacOSWindow.h"
 #include "event/ApplicationEvent.h"
@@ -49,8 +47,8 @@ void MacOSWindow::Init( const WindowProps& props )
                               props.Title.c_str(),
                               nullptr,
                               nullptr );
-  glfwMakeContextCurrent( mWindow );
-  gladLoadGLLoader( (GLADloadproc)glfwGetProcAddress );
+  mRenderContext = RenderContext::Create( mWindow );
+  mRenderContext->Init();
   glfwSetWindowUserPointer( mWindow, &mData );
   SetVSync( true );
 
@@ -135,7 +133,7 @@ void MacOSWindow::Shutdown()
 void MacOSWindow::OnUpdate()
 {
   glfwPollEvents();
-  glfwSwapBuffers( mWindow );
+  mRenderContext->SwapBuffer();
 }
 
 void MacOSWindow::SetVSync( bool enabled )

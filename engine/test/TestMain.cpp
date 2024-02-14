@@ -17,14 +17,16 @@ public:
   }
   virtual void OnImguiRender() override
   {
-    DrawExample();
+    ImGui::Begin( "Test" );
+    ImGui::Text( "Hello!!" );
+    ImGui::End();
   }
 };
 
-class Scop : public Cm::Application
+class TestMain : public Cm::Application
 {
 public:
-  Scop()
+  TestMain()
       : Application()
   {
     PushLayer( new ExampleLayer() );
@@ -33,7 +35,7 @@ public:
 
 std::unique_ptr<Cm::Application> Cm::CreateApplication()
 {
-  return std::make_unique<Scop>();
+  return std::make_unique<TestMain>();
 }
 
 int main( int ac, char** av )
@@ -42,7 +44,7 @@ int main( int ac, char** av )
   (void)av;
   Cm::Logger::Init();
   CM_CLIENT_INFO( "SCOP START!!" );
-  auto scop = Cm::CreateApplication();
-  scop->Run();
+  auto program = Cm::CreateApplication();
+  program->Run();
   return 0;
 }

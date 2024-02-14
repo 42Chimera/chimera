@@ -6,10 +6,14 @@
 
 namespace Cm
 {
-class CHIMERA_API Layer
+class Layer
 {
 public:
-  Layer( const std::string& name = "Layer" );
+  Layer( const std::string& name = "Layer" )
+      : mName( name )
+  {
+  }
+
   virtual ~Layer() = default;
 
   virtual void OnAttatch() {}
@@ -26,9 +30,12 @@ public:
     return mName;
   }
 
+  CHIMERA_API void DrawExample();
+
 private:
   std::string mName;
 };
+
 
 }// namespace Cm
 #endif
