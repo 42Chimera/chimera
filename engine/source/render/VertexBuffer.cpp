@@ -10,10 +10,10 @@ std::shared_ptr<VertexBuffer> VertexBuffer::Create( float* vertices, uint32_t si
     case RenderAPI::API::OpenGL:
       return std::make_shared<OpenGLVertexBuffer>( vertices, size );
     case RenderAPI::API::Direct3D:
-      CM_ASSERT_DEV( false, "Not supported RenderAPI!" );
+      CM_ASSERT_DEV( "박지윤", false, "Not supported RenderAPI!" );
       return nullptr;
   }
-  CM_ASSERT_DEV( false, "Not supported RenderAPI!" );
+  CM_ASSERT_DEV( "박지윤", false, "Not supported RenderAPI!" );
   return nullptr;
 }
 }// namespace Cm
