@@ -1,3 +1,6 @@
+#ifndef CHIMERA_ENGINE_SOURCE_PLATFORM_OPENGL_OPENGLVERTEXBUFFER_H
+#define CHIMERA_ENGINE_SOURCE_PLATFORM_OPENGL_OPENGLVERTEXBUFFER_H
+
 #include "render/VertexBuffer.h"
 
 namespace Cm
@@ -27,3 +30,4 @@ private:
   BufferLayout mLayout;
 };
 }// namespace Cm
+#endif
