@@ -45,7 +45,7 @@ Application::Application()
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( indices ), indices, GL_STREAM_DRAW );
 
-  mShader = Shader::Create( "engine/asset/shader/simple.vs", "engine/asset/shader/simple.fs" );
+  mShader = Shader::Create( "../engine/asset/shader/simple.vs", "../engine/asset/shader/simple.fs" );
 }
 
 void Application::OnEvent( Event& event )
