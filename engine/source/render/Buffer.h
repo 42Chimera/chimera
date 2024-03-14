@@ -7,8 +7,7 @@ namespace Cm
 {
 enum class ShaderDataType
 {
-  None = 0,
-  Float,
+  Float = 0,
   Float2,
   Float3,
   Float4,
@@ -27,7 +26,8 @@ static uint32_t ShaderDataTypeSize( ShaderDataType type )
     case ShaderDataType::Float4:
       return 4 * 4;
   }
-  CM_ASSERT_DEV( "박지윤", false, "not supported shader data type!" );
+  // TODO : 사용할 수 없는 이유 찾아내기
+  // CM_ASSERT_DEV( "박지윤", false, "not supported shader data type!" );
   return 0;
 }
 
@@ -55,7 +55,8 @@ public:
       case ShaderDataType::Float4:
         return 4;
     }
-    CM_ASSERT_DEV( "박지윤", false, "not supported shader data type!" );
+    // TODO : 사용할 수 없는 이유 찾아내기
+    // CM_ASSERT_DEV( "박지윤", false, "not supported shader data type!" );
     return 0;
   }
   const std::string& GetName() const
@@ -95,6 +96,7 @@ private:
 class BufferLayout
 {
 public:
+  BufferLayout() = default;
   BufferLayout( std::initializer_list<BufferElement> elements )
       : mElements( elements )
   {
