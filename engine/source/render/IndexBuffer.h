@@ -15,7 +15,7 @@ public:
 
   virtual void SetData( const void* data, uint32_t size ) const = 0;
 
-  static std::shared_ptr<IndexBuffer> Create( float* indices, uint32_t size );
+  static std::shared_ptr<IndexBuffer> Create( uint32_t* indices, uint32_t size );
 };
 }// namespace Cm
 #endif

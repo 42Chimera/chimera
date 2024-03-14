@@ -3,7 +3,7 @@
 
 namespace Cm
 {
-OpenGLIndexBuffer::OpenGLIndexBuffer( float* indices, uint32_t size )
+OpenGLIndexBuffer::OpenGLIndexBuffer( uint32_t* indices, uint32_t size )
 {
   glGenBuffers( 1, &mID );
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mID );

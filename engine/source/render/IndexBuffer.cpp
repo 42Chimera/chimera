@@ -4,7 +4,7 @@
 
 namespace Cm
 {
-std::shared_ptr<IndexBuffer> IndexBuffer::Create( float* indices, uint32_t size )
+std::shared_ptr<IndexBuffer> IndexBuffer::Create( uint32_t* indices, uint32_t size )
 {
   switch ( Renderer::GetAPI() )
   {
