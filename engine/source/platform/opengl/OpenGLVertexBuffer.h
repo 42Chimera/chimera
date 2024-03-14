@@ -20,7 +20,7 @@ public:
   {
     mLayout = layout;
   }
-  virtual const BufferLayout& GetLayout() const
+  virtual const BufferLayout& GetLayout() const override
   {
     return mLayout;
   }
