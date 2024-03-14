@@ -12,8 +12,6 @@ enum class ShaderDataType
   Float2,
   Float3,
   Float4,
-  Mat3,
-  Mat4
 };
 
 static uint32_t ShaderDataTypeSize( ShaderDataType type )
@@ -28,10 +26,6 @@ static uint32_t ShaderDataTypeSize( ShaderDataType type )
       return 4 * 3;
     case ShaderDataType::Float4:
       return 4 * 4;
-    case ShaderDataType::Mat3:
-      return 4 * 3 * 3;
-    case ShaderDataType::Mat4:
-      return 4 * 4 * 4;
   }
   CM_ASSERT_DEV( "박지윤", false, "not supported shader data type!" );
   return 0;
@@ -59,10 +53,6 @@ public:
       case ShaderDataType::Float3:
         return 3;
       case ShaderDataType::Float4:
-        return 4;
-      case ShaderDataType::Mat3:
-        return 3;
-      case ShaderDataType::Mat4:
         return 4;
     }
     CM_ASSERT_DEV( "박지윤", false, "not supported shader data type!" );
@@ -109,6 +99,28 @@ public:
       : mElements( elements )
   {
     SetOffsetAndStride();
+  }
+
+  uint32_t GetStride() const
+  {
+    return mStride;
+  }
+
+  std::vector<BufferElement>::iterator begin()
+  {
+    return mElements.begin();
+  }
+  std::vector<BufferElement>::iterator end()
+  {
+    return mElements.end();
+  }
+  std::vector<BufferElement>::const_iterator begin() const
+  {
+    return mElements.begin();
+  }
+  std::vector<BufferElement>::const_iterator end() const
+  {
+    return mElements.end();
   }
 
 private:
