@@ -9,7 +9,7 @@ namespace Cm
 class CHIMERA_API VertexArray
 {
 public:
-  virtual ~VertexArray();
+  virtual ~VertexArray() = default;
 
   virtual void Bind() const = 0;
   virtual void UnBind() const = 0;
