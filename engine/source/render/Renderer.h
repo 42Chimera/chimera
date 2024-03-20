@@ -6,10 +6,13 @@
 namespace Cm
 {
 // static class
-// - 클라이언트에서 해당 지점을 통해 렌더링 과정을 불러올 수 있
+// - 클라이언트에서 해당 지점을 통해 렌더링 과정을 불러옴
 class CHIMERA_API Renderer
 {
 public:
+  static void BegineScene();
+  static void EndScene();
+  static void Submit();
   static RenderAPI::API GetAPI();
 };
 }// namespace Cm
