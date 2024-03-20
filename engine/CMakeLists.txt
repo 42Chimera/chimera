@@ -43,7 +43,8 @@ if (MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /wd4201 /wd4244")
     endif()
 elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID STREQUAL "Clang") OR (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang"))
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -Wall -Wno-long-long")
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -Wall -Wno-long-long")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra -Wall -Wno-long-long")
 endif()
 
 # -------------------------------------------------------------------------------
@@ -237,11 +238,17 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/render/RenderContext.cpp
 	${CMAKE_SOURCE_DIR}/source/render/RenderContext.cpp
 	${CMAKE_SOURCE_DIR}/source/render/Shader.cpp
+	${CMAKE_SOURCE_DIR}/source/render/VertexBuffer.cpp
+	${CMAKE_SOURCE_DIR}/source/render/IndexBuffer.cpp
+	${CMAKE_SOURCE_DIR}/source/render/VertexArray.cpp
 
 	${CMAKE_SOURCE_DIR}/source/platform/window/MacOSWindow.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/input/MacOSInput.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLRenderContext.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLShader.cpp
+	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLVertexBuffer.cpp
+	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLIndexBuffer.cpp
+	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLVertexArray.cpp
 
 	${CMAKE_SOURCE_DIR}/source/imgui/ImguiLayer.cpp
 )

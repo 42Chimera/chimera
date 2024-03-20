@@ -1,6 +1,8 @@
 #include "platform/opengl/OpenGLShader.h"
 #include "glad/glad.h"
 
+#include <filesystem>
+
 namespace Cm
 {
 std::unique_ptr<OpenGLShader> OpenGLShader::Create( const std::string& vertexFilePath, const std::string& fragFilePath )
@@ -142,6 +144,7 @@ std::optional<std::string> OpenGLShader::LoadFromFile( const std::string& filePa
   std::ifstream in( filePath );
   if ( !in.is_open() )
   {
+    CM_CORE_ERROR( "current directory : {0}", std::filesystem::current_path() );
     CM_CORE_ERROR( "file not opened : {0}", filePath );
     return std::nullopt;
   }
