@@ -2,7 +2,7 @@
 #define CHIMERA_ENGINE_SOURCE_RENDER_SHADER_H
 
 #include "core/Pch.h"
-
+#include "glm/glm.hpp"
 namespace Cm
 {
 
@@ -18,6 +18,8 @@ public:
 
   virtual void Bind() = 0;
   virtual void Unbind() = 0;
+
+  virtual void SetUniformMat4( const std::string& name, const glm::mat4& matrix ) = 0;
 
   static std::unique_ptr<Shader> Create( const std::string& vertexFilePath, const std::string& fragFilePath );
 };
