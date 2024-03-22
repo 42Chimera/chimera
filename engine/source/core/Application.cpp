@@ -47,7 +47,11 @@ Application::Application()
   mVertexArray->SetIndexBuffer( mIndexBuffer );
 
   mShader = Shader::Create( "../engine/asset/shader/simple.vs", "../engine/asset/shader/simple.fs" );
+  // init camera
+  ProjectionInfo projectionInfo = { 45.0f, (float)( mWindow->GetWidth() / mWindow->GetHeight() ), 0.1f, 10.0f };
+  mCamera = std::make_unique<Camera>( glm::vec3( 1.0f, 1.0f, 3.0f ), glm::vec3( 0.0f, 0.0f, -1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ), ProjectionType::Perspective, projectionInfo );
 }
+
 
 void Application::OnEvent( Event& event )
 {
@@ -73,8 +77,10 @@ void Application::Run()
     glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT );
 
+    Renderer::BegineScene();
     mShader->Bind();
     mVertexArray->Bind();
+    Renderer::EndScene();
     // glBindVertexArray( mVertexBufferArray );
     glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr );
     for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
