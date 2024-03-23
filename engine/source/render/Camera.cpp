@@ -19,13 +19,13 @@ void Camera::UpdateCameraInfo()
   //
 }
 
-const glm::mat4& Camera::CalculateViewMatrix()
+glm::mat4 Camera::CalculateViewMatrix()
 {
   UpdateCameraInfo();
   return glm::lookAt( mCameraInfo.pos, mCameraInfo.pos + mCameraInfo.dir, mCameraInfo.upDir );
 }
 
-const glm::mat4& Camera::CalculateViewProjectionMatrix()
+glm::mat4 Camera::CalculateViewProjectionMatrix()
 {
   glm::mat4 view = CalculateViewMatrix();
   glm::mat4 projection;
