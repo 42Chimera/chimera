@@ -10,6 +10,6 @@ class CHIMERA_API Projection
 public:
   Projection() = default;
   virtual ~Projection() = default;
-  virtual const glm::mat4& CalculateProjectionMaxtrix() const = 0;
+  virtual glm::mat4 CalculateProjectionMaxtrix() const = 0;
 };
 #endif

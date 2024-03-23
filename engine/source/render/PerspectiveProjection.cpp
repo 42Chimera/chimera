@@ -11,7 +11,7 @@ PerspectiveProjection::PerspectiveProjection( float fov, float aspectRatio, floa
 {
 }
 
-const glm::mat4& PerspectiveProjection::CalculateProjectionMaxtrix() const
+glm::mat4 PerspectiveProjection::CalculateProjectionMaxtrix() const
 {
   return glm::perspective( glm::radians( mFov ), mAspectRatio, mNear, mFar );
 }
