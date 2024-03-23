@@ -79,10 +79,11 @@ void Application::Run()
 
     Renderer::BegineScene();
     mShader->Bind();
-    mVertexArray->Bind();
+    // mVertexArray->Bind();
+    Renderer::Submit( mVertexArray );
     Renderer::EndScene();
     // glBindVertexArray( mVertexBufferArray );
-    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr );
+    // glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr );
     for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
     {
       ( *it )->OnUpdate();

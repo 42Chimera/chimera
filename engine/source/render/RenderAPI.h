@@ -23,7 +23,7 @@ public:
   virtual void SetClearColor( const glm::vec4& color ) const = 0;
   virtual void ClearColor() const = 0;
 
-  virtual void DrawElement( const std::shared_ptr<VertexArray>& vertexArray, uint32_t count ) const = 0;
+  virtual void DrawElement( const std::shared_ptr<VertexArray>& vertexArray ) const = 0;
 
 
   static std::unique_ptr<RenderAPI> Create();

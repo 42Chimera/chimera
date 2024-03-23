@@ -12,7 +12,7 @@ class CHIMERA_API Renderer
 public:
   static void BegineScene();
   static void EndScene();
-  static void Submit();
+  static void Submit( const std::shared_ptr<VertexArray>& vertexArray );
   static RenderAPI::API GetAPI();
 };
 }// namespace Cm
