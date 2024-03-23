@@ -241,6 +241,9 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/render/VertexBuffer.cpp
 	${CMAKE_SOURCE_DIR}/source/render/IndexBuffer.cpp
 	${CMAKE_SOURCE_DIR}/source/render/VertexArray.cpp
+	${CMAKE_SOURCE_DIR}/source/render/RenderCommand.cpp
+	${CMAKE_SOURCE_DIR}/source/render/Camera.cpp
+	${CMAKE_SOURCE_DIR}/source/render/PerspectiveProjection.cpp
 
 	${CMAKE_SOURCE_DIR}/source/platform/window/MacOSWindow.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/input/MacOSInput.cpp
@@ -249,6 +252,7 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLVertexBuffer.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLIndexBuffer.cpp
 	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLVertexArray.cpp
+	${CMAKE_SOURCE_DIR}/source/platform/opengl/OpenGLRenderAPI.cpp
 
 	${CMAKE_SOURCE_DIR}/source/imgui/ImguiLayer.cpp
 )
