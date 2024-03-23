@@ -14,9 +14,14 @@ public:
   virtual void UnBind() const override;
 
   virtual void SetData( const void* data, uint32_t size ) const override;
+  virtual uint32_t GetSize() const override
+  {
+    return mSize;
+  }
 
 private:
   uint32_t mID;
+  uint32_t mSize;
 };
 }// namespace Cm
 #endif
