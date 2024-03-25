@@ -8,4 +8,11 @@
 #include "core/Layer.h"
 #include "core/Pch.h"
 
+#include "render/Shader.h"
+#include "render/VertexArray.h"
+#include "render/VertexBuffer.h"
+#include "render/IndexBuffer.h"
+#include "render/Camera.h"
+#include "render/Renderer.h"
+#include "render/RenderCommnad.h"
 #endif// CHIMERA_ENGINE_H
