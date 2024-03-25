@@ -26,8 +26,8 @@ struct ProjectionInfo
 {
   float fov;
   float aspectRatio;
-  float near;
-  float far;
+  float nearClip;
+  float farClip;
 };
 
 class CHIMERA_API Camera

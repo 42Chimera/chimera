@@ -9,7 +9,7 @@ Camera::Camera( glm::vec3 pos, glm::vec3 dir, glm::vec3 upDir, ProjectionType ty
   mCameraInfo.dir = dir;
   mCameraInfo.upDir = upDir;
   mCameraInfo.type = type;
-  mPerspectiveProjection = std::make_unique<PerspectiveProjection>( info.fov, info.aspectRatio, info.near, info.far );
+  mPerspectiveProjection = std::make_unique<PerspectiveProjection>( info.fov, info.aspectRatio, info.nearClip, info.farClip );
 }
 
 void Camera::UpdateCameraInfo()
