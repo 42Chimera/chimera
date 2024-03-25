@@ -14,12 +14,14 @@ void LayerStack::PushLayer( Layer* layer )
 {
   CM_ASSERT_DEV( "박지윤", ( layer != nullptr ), "layer should not be null" );
   mLayers.emplace( mLayers.begin() + mLayerInsertIndex, layer );
+  layer->OnAttatch();
 }
 
 void LayerStack::PushOverlay( Layer* overlay )
 {
   CM_ASSERT_DEV( "박지윤", ( overlay != nullptr ), "layer should not be null" );
   mLayers.emplace_back( overlay );
+  overlay->OnAttatch();
 }
 
 void LayerStack::PopLayer( Layer* layer )
