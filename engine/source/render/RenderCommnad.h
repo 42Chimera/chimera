@@ -9,6 +9,7 @@ namespace Cm
 class CHIMERA_API RenderCommand
 {
 public:
+  static void Init();
   static void SetViewPort( uint32_t x, uint32_t y, uint32_t width, uint32_t height );
   static void SetClearColor( const glm::vec4& color );
   static void ClearColor();

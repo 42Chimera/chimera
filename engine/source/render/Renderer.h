@@ -15,6 +15,7 @@ namespace Cm
 class CHIMERA_API Renderer
 {
 public:
+  static void Init();
   static void BegineScene( const std::unique_ptr<Camera>& camera );
   static void EndScene();
   static void Submit( const std::unique_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray );
