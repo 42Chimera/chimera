@@ -2,14 +2,17 @@
 #include "render/RenderCommnad.h"
 namespace Cm
 {
-
+Renderer::SceneData Renderer::sSceneData;
 RenderAPI::API Renderer::GetAPI()
 {
   return RenderAPI::GetAPI();
 }
 
 // 렌더링 전 설정해야되는 동작 모음
-void Renderer::BegineScene() {}
+void Renderer::BegineScene( Camera& camera )
+{
+  sSceneData.viewProjectionMatrix = camera.CalculateViewProjectionMatrix();
+}
 // 렌더링 끝난후 해야되는 동작 모응
 void Renderer::EndScene() {}
 
