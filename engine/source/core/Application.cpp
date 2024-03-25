@@ -45,7 +45,7 @@ Application::Application()
 
   // init camera
   ProjectionInfo projectionInfo = { 45.0f, (float)( mWindow->GetWidth() / mWindow->GetHeight() ), 0.1f, 10.0f };
-  mCamera = std::make_unique<Camera>( glm::vec3( 1.0f, 1.0f, 3.0f ), glm::vec3( 0.0f, 0.0f, -1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ), ProjectionType::Perspective, projectionInfo );
+  mCamera = std::make_unique<Camera>( glm::vec3( 0.0f, 0.5f, 5.0f ), glm::vec3( 0.0f, 0.0f, -1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ), ProjectionType::Perspective, projectionInfo );
 }
 
 
@@ -74,9 +74,8 @@ void Application::Run()
     glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT );
 
-    Renderer::BegineScene();
-    mShader->Bind();
-    Renderer::Submit( mVertexArray );
+    Renderer::BegineScene( mCamera );
+    Renderer::Submit( mShader, mVertexArray );
     Renderer::EndScene();
 
     for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
