@@ -5,7 +5,8 @@
 
 #include "core/Pch.h"
 #include "RenderAPI.h"
-#include "render/camera.h"
+#include "render/Camera.h"
+#include "render/Shader.h"
 
 namespace Cm
 {
@@ -14,9 +15,9 @@ namespace Cm
 class CHIMERA_API Renderer
 {
 public:
-  static void BegineScene( Camera& camera );
+  static void BegineScene( const std::unique_ptr<Camera>& camera );
   static void EndScene();
-  static void Submit( const std::shared_ptr<VertexArray>& vertexArray );
+  static void Submit( const std::unique_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray );
   static RenderAPI::API GetAPI();
 
 private:
