@@ -1,6 +1,6 @@
 #include "platform/opengl/OpenGLShader.h"
 #include "glad/glad.h"
-
+#include "glm/gtc/type_ptr.hpp"
 #include <filesystem>
 
 namespace Cm
@@ -162,5 +162,13 @@ void OpenGLShader::Bind()
 void OpenGLShader::Unbind()
 {
   glUseProgram( 0 );
+}
+
+void OpenGLShader::SetUniformMat4( const std::string& name, const glm::mat4& matrix )
+{
+  ///f = float
+  // v = pointer
+  int location = glGetUniformLocation( mProgramID, name.c_str() );
+  glUniformMatrix4fv( location, 1, GL_FALSE, glm::value_ptr( matrix ) );
 }
 }// namespace Cm

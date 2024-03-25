@@ -2,10 +2,13 @@
 .vscode
 .idea
 cmake-build-debug
+.vs
 
 # Build output file
 engine/build/intermediate/* 
 scop/build/intermediate/*
+scop/intermediate/*
+engine/out/*
 binary
 
 # External library

@@ -4,6 +4,7 @@
 namespace Cm
 {
 OpenGLIndexBuffer::OpenGLIndexBuffer( uint32_t* indices, uint32_t size )
+    : mSize( size )
 {
   glGenBuffers( 1, &mID );
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mID );

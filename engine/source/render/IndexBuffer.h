@@ -14,6 +14,7 @@ public:
   virtual void UnBind() const = 0;
 
   virtual void SetData( const void* data, uint32_t size ) const = 0;
+  virtual uint32_t GetSize() const = 0;
 
   static std::shared_ptr<IndexBuffer> Create( uint32_t* indices, uint32_t size );
 };

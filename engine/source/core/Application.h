@@ -12,6 +12,8 @@
 #include "render/VertexArray.h"
 #include "render/VertexBuffer.h"
 #include "render/IndexBuffer.h"
+#include "render/Camera.h"
+#include "render/Renderer.h"
 namespace Cm
 {
 class Application
@@ -51,6 +53,7 @@ private:
   std::shared_ptr<IndexBuffer> mIndexBuffer;
   std::shared_ptr<VertexArray> mVertexArray;
   std::unique_ptr<Shader> mShader;
+  std::unique_ptr<Camera> mCamera;
 };
 
 // To be defined in CLIENT

@@ -35,19 +35,19 @@ Application::Application()
   BufferLayout layout = { { "a_position", ShaderDataType::Float3, false } };
   mVertexBuffer->SetLayout( layout );
   mVertexArray->AddVertexBuffer( mVertexBuffer );
-  // glEnableVertexAttribArray( 0 );
-  // glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), (const void*)nullptr );
-
 
   unsigned int indices[3] = { 0, 1, 2 };
   mIndexBuffer = IndexBuffer::Create( indices, sizeof( indices ) );
-  // glGenBuffers( 1, &mIndexBuffer );
-  // glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer );
-  // glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( indices ), indices, GL_STREAM_DRAW );
   mVertexArray->SetIndexBuffer( mIndexBuffer );
 
+  //init Shader
   mShader = Shader::Create( "../engine/asset/shader/simple.vs", "../engine/asset/shader/simple.fs" );
+
+  // init camera
+  ProjectionInfo projectionInfo = { 45.0f, (float)( mWindow->GetWidth() / mWindow->GetHeight() ), 0.1f, 10.0f };
+  mCamera = std::make_unique<Camera>( glm::vec3( 0.0f, 0.5f, 5.0f ), glm::vec3( 0.0f, 0.0f, -1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ), ProjectionType::Perspective, projectionInfo );
 }
+
 
 void Application::OnEvent( Event& event )
 {
@@ -70,13 +70,14 @@ void Application::Run()
   CM_CORE_INFO( "Run Start" );
   while ( mRunning )
   {
+    //Rendering Logic
     glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT );
 
-    mShader->Bind();
-    mVertexArray->Bind();
-    // glBindVertexArray( mVertexBufferArray );
-    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr );
+    Renderer::BegineScene( mCamera );
+    Renderer::Submit( mShader, mVertexArray );
+    Renderer::EndScene();
+
     for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
     {
       ( *it )->OnUpdate();
