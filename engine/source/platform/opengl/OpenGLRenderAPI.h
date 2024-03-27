@@ -11,6 +11,7 @@ public:
   OpenGLRenderAPI() = default;
   virtual ~OpenGLRenderAPI() = default;
 
+  virtual void Init() const override;
   virtual void SetViewPort( uint32_t x, uint32_t y, uint32_t width, uint32_t height ) const override;
   virtual void SetClearColor( const glm::vec4& color ) const override;
   virtual void ClearColor() const override;

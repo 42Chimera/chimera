@@ -2,6 +2,8 @@
 #include "glad/glad.h"
 #include "internal/CmUtil.h"
 #include "core/Application.h"
+#include "render/RenderCommnad.h"
+#include "render/Renderer.h"
 
 namespace Cm
 {
@@ -17,35 +19,8 @@ Application::Application()
   mImguiLayer = new ImguiLayer( "Imgui_Layer" );
   PushOverLay( mImguiLayer );
 
-  // glViewport( 0, 0, mWindow.get()->GetWidth(), mWindow.get()->GetHeight() );
-  mVertexArray = VertexArray::Create();
-
-  float vertices[9] = {
-  -0.5f,
-  -0.5f,
-  0.0f,
-  0.5f,
-  -0.5f,
-  0.0f,
-  0.0f,
-  0.5f,
-  0.0f };
-
-  mVertexBuffer = VertexBuffer::Create( vertices, sizeof( vertices ) );
-  BufferLayout layout = { { "a_position", ShaderDataType::Float3, false } };
-  mVertexBuffer->SetLayout( layout );
-  mVertexArray->AddVertexBuffer( mVertexBuffer );
-
-  unsigned int indices[3] = { 0, 1, 2 };
-  mIndexBuffer = IndexBuffer::Create( indices, sizeof( indices ) );
-  mVertexArray->SetIndexBuffer( mIndexBuffer );
-
-  //init Shader
-  mShader = Shader::Create( "../engine/asset/shader/simple.vs", "../engine/asset/shader/simple.fs" );
-
-  // init camera
-  ProjectionInfo projectionInfo = { 45.0f, (float)( mWindow->GetWidth() / mWindow->GetHeight() ), 0.1f, 10.0f };
-  mCamera = std::make_unique<Camera>( glm::vec3( 0.0f, 0.5f, 5.0f ), glm::vec3( 0.0f, 0.0f, -1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ), ProjectionType::Perspective, projectionInfo );
+  Renderer::Init();
+  RenderCommand::SetViewPort( 0, 0, mWindow->GetWidth(), mWindow->GetHeight() );
 }
 
 
@@ -54,6 +29,7 @@ void Application::OnEvent( Event& event )
   EventDispatcher dispatcher( event );
   dispatcher.Dispatch<WindowCloseEvent>(
   std::bind( &Application::OnWindowCloseEvent, this, std::placeholders::_1 ) );
+  //TODO: OnWindowResizeEvent 추가
 
   for ( auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); ++it )
   {
@@ -70,14 +46,6 @@ void Application::Run()
   CM_CORE_INFO( "Run Start" );
   while ( mRunning )
   {
-    //Rendering Logic
-    glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
-    glClear( GL_COLOR_BUFFER_BIT );
-
-    Renderer::BegineScene( mCamera );
-    Renderer::Submit( mShader, mVertexArray );
-    Renderer::EndScene();
-
     for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
     {
       ( *it )->OnUpdate();

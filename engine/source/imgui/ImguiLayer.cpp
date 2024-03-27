@@ -50,6 +50,8 @@ void ImguiLayer::OnDetach()
   ImGui::DestroyContext();
 }
 
+void ImguiLayer::OnUpdate() {}
+
 void ImguiLayer::begin()
 {
   // Start the Dear ImGui frame

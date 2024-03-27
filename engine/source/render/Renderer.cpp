@@ -7,7 +7,10 @@ RenderAPI::API Renderer::GetAPI()
 {
   return RenderAPI::GetAPI();
 }
-
+void Renderer::Init()
+{
+  RenderCommand::Init();
+}
 // 렌더링 전 설정해야되는 동작 모음
 void Renderer::BegineScene( const std::unique_ptr<Camera>& camera )
 {

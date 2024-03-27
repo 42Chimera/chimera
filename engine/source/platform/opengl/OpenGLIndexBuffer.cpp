@@ -8,7 +8,7 @@ OpenGLIndexBuffer::OpenGLIndexBuffer( uint32_t* indices, uint32_t size )
 {
   glGenBuffers( 1, &mID );
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mID );
-  glBufferData( GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW );
+  glBufferData( GL_ELEMENT_ARRAY_BUFFER, size * sizeof( uint32_t ), indices, GL_STATIC_DRAW );
 }
 
 OpenGLIndexBuffer::~OpenGLIndexBuffer()

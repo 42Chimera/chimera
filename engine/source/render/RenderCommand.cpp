@@ -5,7 +5,10 @@ namespace Cm
 {
 std::unique_ptr<RenderAPI> RenderCommand::sRenderAPI = RenderAPI::Create();
 
-
+void RenderCommand::Init()
+{
+  sRenderAPI->Init();
+}
 void RenderCommand::SetViewPort( uint32_t x, uint32_t y, uint32_t width, uint32_t height )
 {
   sRenderAPI->SetViewPort( x, y, width, height );

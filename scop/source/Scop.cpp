@@ -7,18 +7,91 @@ public:
       : Layer( "ExampleLayer" )
   {
   }
+  void OnAttatch() override
+  {
+    mVertexArray = Cm::VertexArray::Create();
+    // clang-format off
+    std::vector<float> vertices = {
+    -0.5f, -0.5f, -0.5f,
+     0.5f, -0.5f, -0.5f,
+     0.5f,  0.5f, -0.5f,
+    -0.5f,  0.5f, -0.5f,
+    -0.5f, -0.5f,  0.5f,
+     0.5f, -0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+     0.5f,  0.5f, -0.5f,
+     0.5f, -0.5f, -0.5f,
+     0.5f, -0.5f,  0.5f,
+    -0.5f, -0.5f, -0.5f,
+     0.5f, -0.5f, -0.5f,
+     0.5f, -0.5f,  0.5f,
+    -0.5f, -0.5f,  0.5f,
+    -0.5f,  0.5f, -0.5f,
+     0.5f,  0.5f, -0.5f,
+     0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f,  0.5f,
+    };
+    // clang-format on
+    mVertexBuffer = Cm::VertexBuffer::Create( vertices.data(), vertices.size() * sizeof( float ) );
+    Cm::BufferLayout layout = { { "a_position", Cm::ShaderDataType::Float3, false } };
+    mVertexBuffer->SetLayout( layout );
+    mVertexArray->AddVertexBuffer( mVertexBuffer );
+
+    // clang-format off
+    std::vector<uint32_t> indices = {
+     0,  2,  1,  2,  0,  3,
+     4,  5,  6,  6,  7,  4,
+     8,  9, 10, 10, 11,  8,
+    12, 14, 13, 14, 12, 15,
+    16, 17, 18, 18, 19, 16,
+    20, 22, 21, 22, 20, 23,
+    };
+    // clang-format on
+    mIndexBuffer = Cm::IndexBuffer::Create( indices.data(), indices.size() );
+    mVertexArray->SetIndexBuffer( mIndexBuffer );
+
+    //init Shader
+    mShader = Cm::Shader::Create( "../engine/asset/shader/simple.vs", "../engine/asset/shader/simple.fs" );
+
+    // init camera
+    // TODO : aspectration 가지고 들어올 방벙 생각해보기
+    Cm::ProjectionInfo projectionInfo = { 45.0f, ( 1280.0f / 720.0f ), 0.1f, 10.0f };
+    mCamera = std::make_unique<Cm::Camera>( glm::vec3( 0.0f, 3.0f, 3.0f ), glm::vec3( 0.0f, -1.0f, -1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ), Cm::ProjectionType::Perspective, projectionInfo );
+  }
+  void OnDetach() override
+  {
+  }
   void OnUpdate() override
   {
+    //Rendering Logic
+    Cm::RenderCommand::SetClearColor( { 0.1f, 0.1f, 0.1f, 1.0f } );
+    Cm::RenderCommand::ClearColor();
+
+    Cm::Renderer::BegineScene( mCamera );
+    Cm::Renderer::Submit( mShader, mVertexArray );
+    Cm::Renderer::EndScene();
   }
 
   void OnEvent( Cm::Event& event ) override
   {
-    CM_CLIENT_TRACE( "{0}", event );
   }
   virtual void OnImguiRender() override
   {
     DrawExample();
   }
+
+private:
+  std::shared_ptr<Cm::VertexBuffer> mVertexBuffer;
+  std::shared_ptr<Cm::IndexBuffer> mIndexBuffer;
+  std::shared_ptr<Cm::VertexArray> mVertexArray;
+  std::unique_ptr<Cm::Shader> mShader;
+  std::unique_ptr<Cm::Camera> mCamera;
 };
 
 class Scop : public Cm::Application

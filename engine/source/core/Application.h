@@ -8,12 +8,6 @@
 #include "event/ApplicationEvent.h"
 #include "core/LayerStack.h"
 #include "imgui/ImguiLayer.h"
-#include "render/Shader.h"
-#include "render/VertexArray.h"
-#include "render/VertexBuffer.h"
-#include "render/IndexBuffer.h"
-#include "render/Camera.h"
-#include "render/Renderer.h"
 namespace Cm
 {
 class Application
@@ -48,12 +42,6 @@ private:
   ImguiLayer* mImguiLayer;
   LayerStack mLayerStack;
   bool mRunning = true;
-
-  std::shared_ptr<VertexBuffer> mVertexBuffer;
-  std::shared_ptr<IndexBuffer> mIndexBuffer;
-  std::shared_ptr<VertexArray> mVertexArray;
-  std::unique_ptr<Shader> mShader;
-  std::unique_ptr<Camera> mCamera;
 };
 
 // To be defined in CLIENT
