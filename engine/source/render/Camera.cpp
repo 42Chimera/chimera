@@ -13,7 +13,7 @@ Camera::Camera()
 void Camera::UpdateCameraState()
 {
   const float cameraSpeed = 0.1f;
-  const float cameraRotaionSpeed = 0.8f;
+  const float cameraRotaionSpeed = 0.3f;
   if ( Input::IsKeyPressed( Key::LeftControl ) )
   {
     // keyboard event
