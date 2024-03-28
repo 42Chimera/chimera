@@ -2,8 +2,11 @@
 
 namespace Cm
 {
-std::chrono::high_resolution_clock::time_point Time::GetCurrentTime()
+float Time::GetCurrentTime()
 {
-  return std::chrono::high_resolution_clock::now();
+  auto curTime = std::chrono::high_resolution_clock::now();
+
+  std::chrono::duration<float> durationSinceEpoch = curTime.time_since_epoch();
+  return durationSinceEpoch.count();
 }
 }// namespace Cm

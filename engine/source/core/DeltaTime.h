@@ -11,9 +11,13 @@ class CHIMERA_API DeltaTime
 {
 public:
   DeltaTime();
+  DeltaTime( float time );
+
+  float GetSecond() const;
+  float GetMiliSecond() const;
 
 private:
-  std::chrono::high_resolution_clock::time_point mTime;
+  float mTime;// second in float
 };
 }// namespace Cm
 #endif
