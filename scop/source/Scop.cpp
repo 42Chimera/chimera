@@ -65,13 +65,13 @@ public:
   void OnDetach() override
   {
   }
-  void OnUpdate() override
+  void OnUpdate( Cm::DeltaTime dt ) override
   {
     //Rendering Logic
     Cm::RenderCommand::SetClearColor( { 0.1f, 0.1f, 0.1f, 1.0f } );
     Cm::RenderCommand::ClearColor();
 
-    Cm::Renderer::BegineScene( mCamera );
+    Cm::Renderer::BegineScene( mCamera, dt );
     Cm::Renderer::Submit( mShader, mVertexArray );
     Cm::Renderer::EndScene();
   }

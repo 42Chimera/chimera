@@ -10,39 +10,37 @@ Camera::Camera()
   mPerspectiveProjection = std::make_unique<PerspectiveProjection>( mFov, mAspectRatio, mNearClip, mFarClip );
 }
 
-void Camera::UpdateCameraState()
+void Camera::UpdateCameraState( DeltaTime dt )
 {
-  const float cameraSpeed = 0.1f;
-  const float cameraRotaionSpeed = 0.3f;
   if ( Input::IsKeyPressed( Key::LeftControl ) )
   {
     // keyboard event
     glm::vec3 cameraFrontDir = glm::normalize( mCameraFrontDir );
     if ( Input::IsKeyPressed( Key::W ) )
     {
-      mCameraPos += cameraSpeed * cameraFrontDir;
+      mCameraPos += mCameraMoveSpeed * dt.GetSecond() * cameraFrontDir;
     }
     if ( Input::IsKeyPressed( Key::S ) )
     {
-      mCameraPos -= cameraSpeed * cameraFrontDir;
+      mCameraPos -= mCameraMoveSpeed * dt.GetSecond() * cameraFrontDir;
     }
     glm::vec3 cameraRightDir = glm::normalize( glm::cross( mCameraUpDir, -mCameraFrontDir ) );
     if ( Input::IsKeyPressed( Key::A ) )
     {
-      mCameraPos -= cameraSpeed * cameraRightDir;
+      mCameraPos -= mCameraMoveSpeed * dt.GetSecond() * cameraRightDir;
     }
     if ( Input::IsKeyPressed( Key::D ) )
     {
-      mCameraPos += cameraSpeed * cameraRightDir;
+      mCameraPos += mCameraMoveSpeed * dt.GetSecond() * cameraRightDir;
     }
     glm::vec3 cameraUpDir = glm::normalize( glm::cross( cameraRightDir, cameraFrontDir ) );
     if ( Input::IsKeyPressed( Key::E ) )
     {
-      mCameraPos += cameraSpeed * cameraUpDir;
+      mCameraPos += mCameraMoveSpeed * dt.GetSecond() * cameraUpDir;
     }
     if ( Input::IsKeyPressed( Key::Q ) )
     {
-      mCameraPos -= cameraSpeed * cameraUpDir;
+      mCameraPos -= mCameraMoveSpeed * dt.GetSecond() * cameraUpDir;
     }
 
     // mouse event
@@ -52,8 +50,8 @@ void Camera::UpdateCameraState()
       glm::vec2 deltaPos = ( curMousePos - mPrevMousePos );
       mPrevMousePos = curMousePos;
 
-      mCameraYaw -= deltaPos.x * cameraRotaionSpeed;
-      mCameraPitch -= deltaPos.y * cameraRotaionSpeed;
+      mCameraYaw -= deltaPos.x * mCameraRotaionSpeed * dt.GetSecond();
+      mCameraPitch -= deltaPos.y * mCameraRotaionSpeed * dt.GetSecond();
 
       if ( mCameraYaw < 0.0f )
       {
@@ -77,9 +75,9 @@ void Camera::UpdateCameraState()
   }
 }
 
-glm::mat4 Camera::CalculateViewMatrix()
+glm::mat4 Camera::CalculateViewMatrix( DeltaTime dt )
 {
-  UpdateCameraState();
+  UpdateCameraState( dt );
   return glm::lookAt( mCameraPos, mCameraPos + mCameraFrontDir, mCameraUpDir );
 }
 
@@ -100,9 +98,9 @@ void Camera::OnEvent( Event& event )
   dispatcher.Dispatch<MouseButtonPressEvent>( std::bind( &Camera::OnMouseButtonPressEvent, this, std::placeholders::_1 ) );
 }
 
-glm::mat4 Camera::CalculateViewProjectionMatrix()
+glm::mat4 Camera::CalculateViewProjectionMatrix( DeltaTime dt )
 {
-  glm::mat4 view = CalculateViewMatrix();
+  glm::mat4 view = CalculateViewMatrix( dt );
   glm::mat4 projection;
   if ( mCameraType == ProjectionType::Orthogonal )
   {

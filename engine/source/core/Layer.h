@@ -18,7 +18,7 @@ public:
 
   virtual void OnAttatch() = 0;
   virtual void OnDetach() = 0;
-  virtual void OnUpdate() = 0;
+  virtual void OnUpdate( DeltaTime dt ) = 0;
   virtual void OnImguiRender() = 0;
   virtual void OnEvent( Event& event )
   {

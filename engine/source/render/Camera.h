@@ -30,15 +30,15 @@ public:
   Camera();
   ~Camera() = default;
 
-  glm::mat4 CalculateViewProjectionMatrix();
+  glm::mat4 CalculateViewProjectionMatrix( DeltaTime dt );
 
   void OnEvent( Event& event );
 
   // TODO : imgui를 통한 camera 정보 udpate를 위해 접근자 필요
 private:
   glm::mat4
-  CalculateViewMatrix();
-  void UpdateCameraState();
+  CalculateViewMatrix( DeltaTime dt );
+  void UpdateCameraState( DeltaTime dt );
   bool OnMouseButtonPressEvent( MouseButtonPressEvent& event );
 
 private:
@@ -48,6 +48,9 @@ private:
   float mCameraYaw = 0.0f;
   float mCameraPitch = 0.0f;
   ProjectionType mCameraType = ProjectionType::Perspective;
+
+  float mCameraMoveSpeed = 10.0f;
+  float mCameraRotaionSpeed = 10.0f;
 
   float mFov = 45.0f;
   float mAspectRatio = 1.778f;

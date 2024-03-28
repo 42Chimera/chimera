@@ -50,7 +50,7 @@ void ImguiLayer::OnDetach()
   ImGui::DestroyContext();
 }
 
-void ImguiLayer::OnUpdate() {}
+void ImguiLayer::OnUpdate( DeltaTime dt ) {}
 
 void ImguiLayer::begin()
 {

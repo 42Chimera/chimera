@@ -12,9 +12,9 @@ void Renderer::Init()
   RenderCommand::Init();
 }
 // 렌더링 전 설정해야되는 동작 모음
-void Renderer::BegineScene( const std::unique_ptr<Camera>& camera )
+void Renderer::BegineScene( const std::unique_ptr<Camera>& camera, DeltaTime dt )
 {
-  sSceneData.viewProjectionMatrix = camera->CalculateViewProjectionMatrix();
+  sSceneData.viewProjectionMatrix = camera->CalculateViewProjectionMatrix( dt );
 }
 // 렌더링 끝난후 해야되는 동작 모응
 void Renderer::EndScene() {}
