@@ -232,6 +232,8 @@ set(SOURCE
 	${CMAKE_SOURCE_DIR}/source/core/Window.cpp
 	${CMAKE_SOURCE_DIR}/source/core/Layer.cpp
 	${CMAKE_SOURCE_DIR}/source/core/LayerStack.cpp
+	${CMAKE_SOURCE_DIR}/source/core/Time.cpp
+	${CMAKE_SOURCE_DIR}/source/core/DeltaTime.cpp
 
 	${CMAKE_SOURCE_DIR}/source/render/Renderer.cpp
 	${CMAKE_SOURCE_DIR}/source/render/RenderAPI.cpp
