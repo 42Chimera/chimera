@@ -13,32 +13,35 @@ void Camera::UpdateCameraState()
 {
   //TODO : 사용자 이벤트 or GUI를 통한 카메라 정보 변경을 반영하여 계산해 줘야될 값들
   const float cameraSpeed = 0.1;
-  glm::vec3 cameraFrontDir = glm::normalize( mCameraFrontDir );
-  if ( Input::IsKeyPressed( Key::W ) )
+  if ( Input::IsKeyPressed( Key::LeftControl ) )
   {
-    mCameraPos += cameraSpeed * cameraFrontDir;
-  }
-  if ( Input::IsKeyPressed( Key::S ) )
-  {
-    mCameraPos -= cameraSpeed * cameraFrontDir;
-  }
-  glm::vec3 cameraRightDir = glm::normalize( glm::cross( mCameraUpDir, -mCameraFrontDir ) );
-  if ( Input::IsKeyPressed( Key::A ) )
-  {
-    mCameraPos -= cameraSpeed * cameraRightDir;
-  }
-  if ( Input::IsKeyPressed( Key::D ) )
-  {
-    mCameraPos += cameraSpeed * cameraRightDir;
-  }
-  glm::vec3 cameraUpDir = glm::normalize( glm::cross( cameraRightDir, cameraFrontDir ) );
-  if ( Input::IsKeyPressed( Key::E ) )
-  {
-    mCameraPos += cameraSpeed * cameraUpDir;
-  }
-  if ( Input::IsKeyPressed( Key::Q ) )
-  {
-    mCameraPos -= cameraSpeed * cameraUpDir;
+    glm::vec3 cameraFrontDir = glm::normalize( mCameraFrontDir );
+    if ( Input::IsKeyPressed( Key::W ) )
+    {
+      mCameraPos += cameraSpeed * cameraFrontDir;
+    }
+    if ( Input::IsKeyPressed( Key::S ) )
+    {
+      mCameraPos -= cameraSpeed * cameraFrontDir;
+    }
+    glm::vec3 cameraRightDir = glm::normalize( glm::cross( mCameraUpDir, -mCameraFrontDir ) );
+    if ( Input::IsKeyPressed( Key::A ) )
+    {
+      mCameraPos -= cameraSpeed * cameraRightDir;
+    }
+    if ( Input::IsKeyPressed( Key::D ) )
+    {
+      mCameraPos += cameraSpeed * cameraRightDir;
+    }
+    glm::vec3 cameraUpDir = glm::normalize( glm::cross( cameraRightDir, cameraFrontDir ) );
+    if ( Input::IsKeyPressed( Key::E ) )
+    {
+      mCameraPos += cameraSpeed * cameraUpDir;
+    }
+    if ( Input::IsKeyPressed( Key::Q ) )
+    {
+      mCameraPos -= cameraSpeed * cameraUpDir;
+    }
   }
 }
 
