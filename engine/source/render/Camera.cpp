@@ -4,59 +4,57 @@
 #include "core/Input.h"
 namespace Cm
 {
-Camera::Camera( glm::vec3 pos, glm::vec3 dir, glm::vec3 upDir, ProjectionType type, ProjectionInfo info )
+Camera::Camera()
 {
-  mCameraInfo.pos = pos;
-  mCameraInfo.dir = dir;
-  mCameraInfo.upDir = upDir;
-  mCameraInfo.type = type;
-  mPerspectiveProjection = std::make_unique<PerspectiveProjection>( info.fov, info.aspectRatio, info.nearClip, info.farClip );
+  mPerspectiveProjection = std::make_unique<PerspectiveProjection>( mFov, mAspectRatio, mNearClip, mFarClip );
 }
 
-void Camera::UpdateCameraInfo()
+void Camera::UpdateCameraState()
 {
   //TODO : 사용자 이벤트 or GUI를 통한 카메라 정보 변경을 반영하여 계산해 줘야될 값들
   const float cameraSpeed = 0.1;
-  glm::vec3 cameraFrontDir = glm::normalize( mCameraInfo.dir );
+  glm::vec3 cameraFrontDir = glm::normalize( mCameraFrontDir );
   if ( Input::IsKeyPressed( Key::W ) )
   {
-    mCameraInfo.pos += cameraSpeed * cameraFrontDir;
+    mCameraPos += cameraSpeed * cameraFrontDir;
   }
   if ( Input::IsKeyPressed( Key::S ) )
   {
-    mCameraInfo.pos -= cameraSpeed * cameraFrontDir;
+    mCameraPos -= cameraSpeed * cameraFrontDir;
   }
-  glm::vec3 cameraRightDir = glm::normalize( glm::cross( mCameraInfo.upDir, -mCameraInfo.dir ) );
+  glm::vec3 cameraRightDir = glm::normalize( glm::cross( mCameraUpDir, -mCameraFrontDir ) );
   if ( Input::IsKeyPressed( Key::A ) )
   {
-    mCameraInfo.pos -= cameraSpeed * cameraRightDir;
+    mCameraPos -= cameraSpeed * cameraRightDir;
   }
   if ( Input::IsKeyPressed( Key::D ) )
   {
-    mCameraInfo.pos += cameraSpeed * cameraRightDir;
+    mCameraPos += cameraSpeed * cameraRightDir;
   }
   glm::vec3 cameraUpDir = glm::normalize( glm::cross( cameraRightDir, cameraFrontDir ) );
   if ( Input::IsKeyPressed( Key::E ) )
   {
-    mCameraInfo.pos += cameraSpeed * cameraUpDir;
+    mCameraPos += cameraSpeed * cameraUpDir;
   }
   if ( Input::IsKeyPressed( Key::Q ) )
   {
-    mCameraInfo.pos -= cameraSpeed * cameraUpDir;
+    mCameraPos -= cameraSpeed * cameraUpDir;
   }
 }
 
 glm::mat4 Camera::CalculateViewMatrix()
 {
-  UpdateCameraInfo();
-  return glm::lookAt( mCameraInfo.pos, mCameraInfo.pos + mCameraInfo.dir, mCameraInfo.upDir );
+  UpdateCameraState();
+  return glm::lookAt( mCameraPos, mCameraPos + mCameraFrontDir, mCameraUpDir );
 }
+
+void Camera::OnEvent( Event& event ) {}
 
 glm::mat4 Camera::CalculateViewProjectionMatrix()
 {
   glm::mat4 view = CalculateViewMatrix();
   glm::mat4 projection;
-  if ( mCameraInfo.type == ProjectionType::Orthogonal )
+  if ( mCameraType == ProjectionType::Orthogonal )
   {
     projection = mOrthogonalProjection->CalculateProjectionMaxtrix();
   }
