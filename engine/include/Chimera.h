@@ -8,6 +8,8 @@
 #include "core/Layer.h"
 #include "core/Pch.h"
 #include "core/Input.h"
+#include "core/Time.h"
+#include "core/DeltaTime.h"
 
 #include "render/Shader.h"
 #include "render/VertexArray.h"

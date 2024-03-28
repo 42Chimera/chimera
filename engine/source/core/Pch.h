@@ -20,4 +20,6 @@
 
 #include "core/Logger.h"
 #include "internal/CmUtil.h"
+#include "core/Time.h"
+#include "core/DeltaTime.h"
 #endif//CHIMERA_ENGINE_SOURCE_CORE_PCH_H
