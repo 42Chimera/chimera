@@ -16,6 +16,8 @@
 #include <unordered_set>
 #include <vector>
 
+#include <chrono>
+
 #include "core/Logger.h"
 #include "internal/CmUtil.h"
 #endif//CHIMERA_ENGINE_SOURCE_CORE_PCH_H
