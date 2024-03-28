@@ -57,7 +57,7 @@ public:
     mVertexArray->SetIndexBuffer( mIndexBuffer );
 
     //init Shader
-    mShader = Cm::Shader::Create( "../engine/asset/shader/simple.vs", "../engine/asset/shader/simple.fs" );
+    mShader = Cm::Shader::Create( "./engine/asset/shader/simple.vs", "./engine/asset/shader/simple.fs" );
 
     // init camera
     // TODO : aspectration 가지고 들어올 방벙 생각해보기
