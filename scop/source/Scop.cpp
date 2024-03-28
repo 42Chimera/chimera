@@ -78,6 +78,7 @@ public:
 
   void OnEvent( Cm::Event& event ) override
   {
+    mCamera->OnEvent( event );
   }
   virtual void OnImguiRender() override
   {

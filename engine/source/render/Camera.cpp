@@ -2,6 +2,7 @@
 #include "render/PerspectiveProjection.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "core/Input.h"
+
 namespace Cm
 {
 Camera::Camera()
@@ -11,10 +12,11 @@ Camera::Camera()
 
 void Camera::UpdateCameraState()
 {
-  //TODO : 사용자 이벤트 or GUI를 통한 카메라 정보 변경을 반영하여 계산해 줘야될 값들
-  const float cameraSpeed = 0.1;
+  const float cameraSpeed = 0.1f;
+  const float cameraRotaionSpeed = 0.8f;
   if ( Input::IsKeyPressed( Key::LeftControl ) )
   {
+    // keyboard event
     glm::vec3 cameraFrontDir = glm::normalize( mCameraFrontDir );
     if ( Input::IsKeyPressed( Key::W ) )
     {
@@ -42,6 +44,36 @@ void Camera::UpdateCameraState()
     {
       mCameraPos -= cameraSpeed * cameraUpDir;
     }
+
+    // mouse event
+    if ( Input::IsMouseButtonPressed( Mouse::ButtonLeft ) )
+    {
+      glm::vec2 curMousePos = Input::GetMousePosition();
+      glm::vec2 deltaPos = ( curMousePos - mPrevMousePos );
+      mPrevMousePos = curMousePos;
+
+      mCameraYaw -= deltaPos.x * cameraRotaionSpeed;
+      mCameraPitch -= deltaPos.y * cameraRotaionSpeed;
+
+      if ( mCameraYaw < 0.0f )
+      {
+        mCameraYaw += 360.0f;
+      }
+      if ( mCameraYaw > 360.0f )
+      {
+        mCameraYaw -= 360.0f;
+      }
+      if ( mCameraPitch > 89.0f )
+      {
+        mCameraPitch = 89.0f;
+      }
+      if ( mCameraPitch < -89.0f )
+      {
+        mCameraPitch = -89.0f;
+      }
+    }
+    glm::mat4 rotation = glm::rotate( glm::mat4( 1.0f ), glm::radians( mCameraYaw ), glm::vec3( 0.0f, 1.0f, 0.0f ) ) * glm::rotate( glm::mat4( 1.0f ), glm::radians( mCameraPitch ), glm::vec3( 1.0f, 0.0f, 0.0f ) );
+    mCameraFrontDir = rotation * glm::vec4( 0.0, 0.0f, -1.0f, 0.0f );
   }
 }
 
@@ -51,7 +83,22 @@ glm::mat4 Camera::CalculateViewMatrix()
   return glm::lookAt( mCameraPos, mCameraPos + mCameraFrontDir, mCameraUpDir );
 }
 
-void Camera::OnEvent( Event& event ) {}
+
+bool Camera::OnMouseButtonPressEvent( MouseButtonPressEvent& event )
+{
+  if ( event.GetMouseButton() == Mouse::ButtonLeft )
+  {
+    mPrevMousePos = Input::GetMousePosition();
+  }
+  return false;
+}
+
+void Camera::OnEvent( Event& event )
+{
+  EventDispatcher dispatcher( event );
+
+  dispatcher.Dispatch<MouseButtonPressEvent>( std::bind( &Camera::OnMouseButtonPressEvent, this, std::placeholders::_1 ) );
+}
 
 glm::mat4 Camera::CalculateViewProjectionMatrix()
 {
