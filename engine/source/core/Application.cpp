@@ -9,10 +9,12 @@ namespace Cm
 {
 
 Application::Application()
+    : mLastFrameTime( Time::GetCurrentTime() )
 {
   CM_ASSERT_DEV( "jinypark", ( !sInstance ), "Application already exists" );
   sInstance = this;
   mWindow = std::unique_ptr<Window>( Window::CreateWindow() );
+  mWindow->SetVSync( true );
   mWindow->SetEventCallBack(
   std::bind( &Application::OnEvent, this, std::placeholders::_1 ) );
 
@@ -44,11 +46,18 @@ void Application::OnEvent( Event& event )
 void Application::Run()
 {
   CM_CORE_INFO( "Run Start" );
+
   while ( mRunning )
   {
+    float curFrameTime = Time::GetCurrentTime();
+    DeltaTime dt = DeltaTime( curFrameTime - mLastFrameTime );
+    mLastFrameTime = curFrameTime;
+
+    CM_CORE_TRACE( "fps : {0} second, {1} miliSecond", dt.GetSecond(), dt.GetMiliSecond() );
+
     for ( auto it = mLayerStack.begin(); it != mLayerStack.end(); ++it )
     {
-      ( *it )->OnUpdate();
+      ( *it )->OnUpdate( dt );
     }
 
     //Render Imgui thing in layer

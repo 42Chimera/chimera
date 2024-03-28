@@ -5,6 +5,8 @@
 
 #include "core/Pch.h"
 #include "render/Projection.h"
+#include "event/Event.h"
+#include "event/MouseEvent.h"
 // 카메라는 데이터 집합임
 // 카메라는 객체는 외부 객체에게 viewprojection matrix를 반환해주는 역할을 하면됨
 // viewprojection matrix를 계산하는데 필요한 정보
@@ -22,40 +24,43 @@ enum class ProjectionType
   Perspective,
 };
 
-struct ProjectionInfo
-{
-  float fov;
-  float aspectRatio;
-  float nearClip;
-  float farClip;
-};
-
 class CHIMERA_API Camera
 {
 public:
-  Camera( glm::vec3 pos, glm::vec3 dir, glm::vec3 upDir, ProjectionType type, ProjectionInfo info );
+  Camera();
   ~Camera() = default;
 
-  glm::mat4 CalculateViewProjectionMatrix();
+  glm::mat4 CalculateViewProjectionMatrix( DeltaTime dt );
+
+  void OnEvent( Event& event );
 
   // TODO : imgui를 통한 camera 정보 udpate를 위해 접근자 필요
 private:
-  glm::mat4 CalculateViewMatrix();
-  void UpdateCameraInfo();
+  glm::mat4
+  CalculateViewMatrix( DeltaTime dt );
+  void UpdateCameraState( DeltaTime dt );
+  bool OnMouseButtonPressEvent( MouseButtonPressEvent& event );
 
 private:
-  struct CameraInfo
-  {
-    glm::vec3 pos;
-    glm::vec3 dir;
-    glm::vec3 upDir;
-    float yaw;
-    float pitch;
-    ProjectionType type;
-  };
+  glm::vec3 mCameraPos = { 0.0f, 0.0f, 3.0f };
+  glm::vec3 mCameraFrontDir = { 0.0f, 0.0f, -1.0f };
+  glm::vec3 mCameraUpDir = { 0.0f, 1.0f, 0.0f };
+  float mCameraYaw = 0.0f;
+  float mCameraPitch = 0.0f;
+  ProjectionType mCameraType = ProjectionType::Perspective;
+
+  float mCameraMoveSpeed = 10.0f;
+  float mCameraRotaionSpeed = 10.0f;
+
+  float mFov = 45.0f;
+  float mAspectRatio = 1.778f;
+  float mNearClip = 0.1f;
+  float mFarClip = 10.0f;
+
+  glm::vec2 mPrevMousePos = { 0.0f, 0.0f };
+
   std::unique_ptr<Projection> mOrthogonalProjection;
   std::unique_ptr<Projection> mPerspectiveProjection;
-  CameraInfo mCameraInfo;
 };
 }// namespace Cm
 #endif

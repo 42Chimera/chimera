@@ -42,6 +42,8 @@ private:
   ImguiLayer* mImguiLayer;
   LayerStack mLayerStack;
   bool mRunning = true;
+
+  float mLastFrameTime;
 };
 
 // To be defined in CLIENT

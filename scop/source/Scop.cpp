@@ -57,29 +57,28 @@ public:
     mVertexArray->SetIndexBuffer( mIndexBuffer );
 
     //init Shader
-    mShader = Cm::Shader::Create( "../engine/asset/shader/simple.vs", "../engine/asset/shader/simple.fs" );
+    mShader = Cm::Shader::Create( "./engine/asset/shader/simple.vs", "./engine/asset/shader/simple.fs" );
 
     // init camera
-    // TODO : aspectration 가지고 들어올 방벙 생각해보기
-    Cm::ProjectionInfo projectionInfo = { 45.0f, ( 1280.0f / 720.0f ), 0.1f, 10.0f };
-    mCamera = std::make_unique<Cm::Camera>( glm::vec3( 0.0f, 3.0f, 3.0f ), glm::vec3( 0.0f, -1.0f, -1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ), Cm::ProjectionType::Perspective, projectionInfo );
+    mCamera = std::make_unique<Cm::Camera>();
   }
   void OnDetach() override
   {
   }
-  void OnUpdate() override
+  void OnUpdate( Cm::DeltaTime dt ) override
   {
     //Rendering Logic
     Cm::RenderCommand::SetClearColor( { 0.1f, 0.1f, 0.1f, 1.0f } );
     Cm::RenderCommand::ClearColor();
 
-    Cm::Renderer::BegineScene( mCamera );
+    Cm::Renderer::BegineScene( mCamera, dt );
     Cm::Renderer::Submit( mShader, mVertexArray );
     Cm::Renderer::EndScene();
   }
 
   void OnEvent( Cm::Event& event ) override
   {
+    mCamera->OnEvent( event );
   }
   virtual void OnImguiRender() override
   {
